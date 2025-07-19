@@ -1,9 +1,8 @@
 import React from "react";
 import "./App.css";
-import List from "../src/pages/List";
+import List from "../src/pages/manage/List";
 
 function App() {
-  const a = "10";
   return (
     <div className="App">
       <h1>问卷FE</h1>
