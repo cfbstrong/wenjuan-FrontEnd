@@ -1,4 +1,5 @@
 import React, { FC, useState } from "react";
+import { useTitle } from "ahooks";
 import QuestionCard from "../../components/QuestionCard";
 import styles from "./List.module.scss";
 
@@ -41,6 +42,9 @@ const rawQuestionList = [
 ];
 
 const List: FC = () => {
+  // 设置页面标题
+  useTitle("问卷星-问卷列表");
+
   const [questionList, setQuestionList] = useState(rawQuestionList);
 
   return (
