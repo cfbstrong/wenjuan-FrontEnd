@@ -1,15 +1,17 @@
 import React, { FC, useState } from "react";
 import { useTitle } from "ahooks";
 import QuestionCard from "../../components/QuestionCard";
-import styles from "./List.module.scss";
+import styles from "./common.module.scss";
+import { Typography } from "antd";
 
 const rawQuestionList = [
   {
     _id: "q1",
     title: "What is React?",
-    isPublished: true,
+    isPublished: false,
     answerCount: 2,
     createdAt: "2022-01-01",
+    isStar: true,
   },
   {
     _id: "q2",
@@ -17,6 +19,7 @@ const rawQuestionList = [
     isPublished: true,
     answerCount: 2,
     createdAt: "2022-01-01",
+    isStar: true,
   },
   {
     _id: "q3",
@@ -24,6 +27,7 @@ const rawQuestionList = [
     isPublished: true,
     answerCount: 2,
     createdAt: "2022-01-01",
+    isStar: true,
   },
   {
     _id: "q4",
@@ -31,6 +35,7 @@ const rawQuestionList = [
     isPublished: true,
     answerCount: 2,
     createdAt: "2022-01-01",
+    isStar: true,
   },
   {
     _id: "q5",
@@ -38,8 +43,10 @@ const rawQuestionList = [
     isPublished: true,
     answerCount: 2,
     createdAt: "2022-01-01",
+    isStar: false,
   },
 ];
+const { Title } = Typography;
 
 const List: FC = () => {
   // 设置页面标题
@@ -47,10 +54,19 @@ const List: FC = () => {
 
   const [questionList, setQuestionList] = useState(rawQuestionList);
 
+  const handleStar = (_id: string) => {
+    const newQuestionList = questionList.map((item) => {
+      return item._id === _id ? { ...item, isStar: !item.isStar } : item;
+    });
+    setQuestionList(newQuestionList);
+  };
+
   return (
     <>
       <div className={styles.header}>
-        <div className={styles.left}>我的问卷</div>
+        <div className={styles.left}>
+          <Title level={3}>我的问卷</Title>
+        </div>
         <div className={styles.right}>
           <input type="text" name="" id="" />
         </div>
@@ -58,9 +74,12 @@ const List: FC = () => {
 
       <div className="content">
         <div>
-          {questionList.map((q) => {
-            return <QuestionCard key={q._id} {...q} />;
-          })}
+          {questionList.length > 0 &&
+            questionList.map((q) => {
+              return (
+                <QuestionCard key={q._id} {...q} handleStar={handleStar} />
+              );
+            })}
         </div>
       </div>
 

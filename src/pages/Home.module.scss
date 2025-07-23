@@ -1,0 +1,11 @@
+.container {
+  height: calc(100vh - 64px * 2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
+
+  .title {
+    text-align: center;
+  }
+}
