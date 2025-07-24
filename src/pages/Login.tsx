@@ -71,11 +71,31 @@ const Login: FC = () => {
           wrapperCol={{ span: 16 }}
           style={{ width: 400 }}
         >
-          <Form.Item label="用户名" name="username">
+          <Form.Item
+            label="用户名"
+            name="username"
+            rules={[
+              { required: true, message: "请输入用户名" },
+              {
+                type: "string",
+                min: 5,
+                max: 20,
+                message: "用户名长度需要在5-20个字符之间",
+              },
+              {
+                pattern: /^[a-zA-Z0-9]+$/,
+                message: "用户名只能包含字母和数字",
+              },
+            ]}
+          >
             <Input />
           </Form.Item>
 
-          <Form.Item label="密码" name="password">
+          <Form.Item
+            label="密码"
+            name="password"
+            rules={[{ required: true, message: "请输入密码" }]}
+          >
             <Input.Password />
           </Form.Item>
 
