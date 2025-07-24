@@ -2,6 +2,7 @@ import React, { FC } from "react";
 import { useState } from "react";
 import styles from "./common.module.scss";
 import { useTitle } from "ahooks";
+import ListSearch from "../../components/ListSearch";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 import {
   Typography,
@@ -129,7 +130,7 @@ const Trash: FC = () => {
           <Title level={3}>回收站</Title>
         </div>
         <div className={styles.right}>
-          <input type="text" name="" id="" />
+          <ListSearch />
         </div>
       </div>
 
