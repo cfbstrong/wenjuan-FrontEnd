@@ -1,6 +1,7 @@
 import React, { FC } from "react";
 import { useState } from "react";
 import styles from "./common.module.scss";
+import ListSearch from "../../components/ListSearch";
 import { useTitle } from "ahooks";
 import { Typography, Empty } from "antd";
 import QuestionCard from "../../components/QuestionCard";
@@ -47,7 +48,7 @@ const Star: FC = (props) => {
           <Title level={3}>星标问卷</Title>
         </div>
         <div className={styles.right}>
-          <input type="text" name="" id="" />
+          <ListSearch />
         </div>
       </div>
 
