@@ -1,6 +1,7 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
-import { Button, Flex, Divider } from "antd";
+import { createQuestionService } from "../services/question";
+import { Button, Flex, Divider, message } from "antd";
 import {
   PlusOutlined,
   BarsOutlined,
@@ -10,15 +11,33 @@ import {
 import styles from "./ManageLayout.module.scss";
 
 const ManageLayout: FC = () => {
+  const [loading, setLoading] = useState(false);
+
   const navigate = useNavigate();
 
   const location = useLocation();
+
+  const handleCreateQuestion = async () => {
+    setLoading(true);
+    const { id } = await createQuestionService();
+    if (id) {
+      navigate(`/question/edit/${id}`);
+      message.success("创建成功");
+    }
+    setLoading(false);
+  };
 
   return (
     <div className={styles.container}>
       <div className={styles.left}>
         <Flex gap="middle" vertical>
-          <Button size="large" icon={<PlusOutlined />} type="primary">
+          <Button
+            size="large"
+            icon={<PlusOutlined />}
+            type="primary"
+            onClick={handleCreateQuestion}
+            disabled={loading}
+          >
             创建问卷
           </Button>
           {/* 分割 */}
