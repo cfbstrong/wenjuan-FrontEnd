@@ -14,16 +14,12 @@ const Edit: FC = () => {
   //   getQuestion("1");
   // }, []);
 
-  const { questionData, loading } = useLoadQuestionData();
+  const { data, loading } = useLoadQuestionData();
 
   return (
     <div>
       Edit page
-      {loading ? (
-        <div>Loading...</div>
-      ) : (
-        <div>{JSON.stringify(questionData)}</div>
-      )}
+      {loading ? <div>Loading...</div> : <div>{JSON.stringify(data)}</div>}
     </div>
   );
 };

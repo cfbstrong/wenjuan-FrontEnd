@@ -8,24 +8,38 @@ import {
   StarOutlined,
   DeleteOutlined,
 } from "@ant-design/icons";
+import { useRequest } from "ahooks";
 import styles from "./ManageLayout.module.scss";
 
 const ManageLayout: FC = () => {
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
   const location = useLocation();
 
-  const handleCreateQuestion = async () => {
-    setLoading(true);
-    const { id } = await createQuestionService();
-    if (id) {
-      navigate(`/question/edit/${id}`);
+  // const handleCreateQuestion = async () => {
+  //   setLoading(true);
+  //   const { id } = await createQuestionService();
+  //   if (id) {
+  //     navigate(`/question/edit/${id}`);
+  //     message.success("创建成功");
+  //   }
+  //   setLoading(false);
+  // };
+
+  //用useRequest代替
+  const {
+    data,
+    loading,
+    run: handleCreateQuestion,
+  } = useRequest(createQuestionService, {
+    manual: true,
+    onSuccess: (data) => {
+      navigate(`/question/edit/${data.id}`);
       message.success("创建成功");
-    }
-    setLoading(false);
-  };
+    },
+  });
 
   return (
     <div className={styles.container}>

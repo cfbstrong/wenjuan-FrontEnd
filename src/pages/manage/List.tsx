@@ -1,10 +1,11 @@
 import React, { FC, useState } from "react";
-import { useTitle } from "ahooks";
+import { useTitle, useRequest } from "ahooks";
 import QuestionCard from "../../components/QuestionCard";
 import ListSearch from "../../components/ListSearch";
 import styles from "./common.module.scss";
-import { Typography } from "antd";
-
+import { Typography, Spin } from "antd";
+import { getQuestionListService } from "../../services/question";
+import useLoadQuestionListData from "../../hooks/useLoadQuestionListData";
 const rawQuestionList = [
   {
     _id: "q1",
@@ -53,14 +54,18 @@ const List: FC = () => {
   // 设置页面标题
   useTitle("问卷星-问卷列表");
 
-  const [questionList, setQuestionList] = useState(rawQuestionList);
+  // const [questionList, setQuestionList] = useState(rawQuestionList);
 
-  const handleStar = (_id: string) => {
-    const newQuestionList = questionList.map((item) => {
-      return item._id === _id ? { ...item, isStar: !item.isStar } : item;
-    });
-    setQuestionList(newQuestionList);
-  };
+  //useRequest
+  const { data = {}, loading } = useLoadQuestionListData();
+  const { list = [], total = 0 } = data;
+
+  // const handleStar = (_id: string) => {
+  //   const newQuestionList = questionList.map((item) => {
+  //     return item._id === _id ? { ...item, isStar: !item.isStar } : item;
+  //   });
+  //   setQuestionList(newQuestionList);
+  // };
 
   return (
     <>
@@ -75,11 +80,15 @@ const List: FC = () => {
 
       <div className="content">
         <div>
-          {questionList.length > 0 &&
-            questionList.map((q) => {
-              return (
-                <QuestionCard key={q._id} {...q} handleStar={handleStar} />
-              );
+          {loading && (
+            <div style={{ textAlign: "center" }}>
+              <Spin />
+            </div>
+          )}
+          {!loading &&
+            list.length > 0 &&
+            list.map((q: any) => {
+              return <QuestionCard key={q._id} {...q} />;
             })}
         </div>
       </div>

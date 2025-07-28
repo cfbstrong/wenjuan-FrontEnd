@@ -3,8 +3,9 @@ import { useState } from "react";
 import styles from "./common.module.scss";
 import ListSearch from "../../components/ListSearch";
 import { useTitle } from "ahooks";
-import { Typography, Empty } from "antd";
+import { Typography, Empty, Spin } from "antd";
 import QuestionCard from "../../components/QuestionCard";
+import useLoadQuestionListData from "../../hooks/useLoadQuestionListData";
 
 const { Title } = Typography;
 
@@ -39,7 +40,14 @@ const Star: FC = (props) => {
   // 设置页面标题
   useTitle("问卷星-星标问卷");
 
-  const [questionList, setQuestionList] = useState(rawQuestionList);
+  const {
+    data = {},
+    loading,
+    error,
+  } = useLoadQuestionListData({ isStar: true });
+  const { list = [], total = 0 } = data;
+
+  // const [questionList, setQuestionList] = useState(rawQuestionList);
 
   return (
     <>
@@ -54,9 +62,15 @@ const Star: FC = (props) => {
 
       <div className="content">
         <div>
-          {questionList.length === 0 ? <Empty /> : null}
-          {questionList.length > 0 &&
-            questionList.map((q) => {
+          {loading === false && list.length === 0 ? <Empty /> : null}
+          {loading && (
+            <div style={{ textAlign: "center" }}>
+              <Spin />
+            </div>
+          )}
+          {!loading &&
+            list.length > 0 &&
+            list.map((q: any) => {
               return <QuestionCard key={q._id} {...q} />;
             })}
         </div>

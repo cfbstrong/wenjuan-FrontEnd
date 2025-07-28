@@ -4,6 +4,7 @@ import styles from "./common.module.scss";
 import { useTitle } from "ahooks";
 import ListSearch from "../../components/ListSearch";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
+import useLoadQuestionListData from "../../hooks/useLoadQuestionListData";
 import {
   Typography,
   Empty,
@@ -13,6 +14,7 @@ import {
   Button,
   Modal,
   message,
+  Spin,
 } from "antd";
 
 const { Title } = Typography;
@@ -74,7 +76,9 @@ const Trash: FC = () => {
   // 设置页面标题
   useTitle("问卷星-回收站");
 
-  const [questionList, setQuestionList] = useState(rawQuestionList);
+  // const [questionList, setQuestionList] = useState(rawQuestionList);
+  const { data = {}, loading } = useLoadQuestionListData({ isDeleted: true });
+  const { total = 0, list = [] } = data;
 
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]); // important 这个数组用来装被选中的key
 
@@ -116,9 +120,9 @@ const Trash: FC = () => {
         </Space>
         <Table
           rowSelection={{ type: "checkbox", ...rowSelection }}
-          dataSource={questionList}
+          dataSource={list}
           columns={tableColumns}
-          rowKey={(q) => q._id}
+          rowKey={(q: any) => q._id}
         />
       </>
     );
@@ -136,8 +140,13 @@ const Trash: FC = () => {
 
       <div className="content">
         <div>
-          {questionList.length === 0 ? <Empty /> : null}
-          {questionList.length > 0 && TableElement}
+          {loading === false && list.length === 0 ? <Empty /> : null}
+          {loading && (
+            <div style={{ textAlign: "center" }}>
+              <Spin />
+            </div>
+          )}
+          {!loading && list.length > 0 && TableElement}
         </div>
       </div>
     </>
