@@ -6,8 +6,8 @@ type SeacrchOption = {
   isStar: boolean;
   isDeleted: boolean;
   //用于分页
-  //page
-  //pageSize
+  page: number;
+  pageSize: number;
 };
 
 //获取单个问卷信息

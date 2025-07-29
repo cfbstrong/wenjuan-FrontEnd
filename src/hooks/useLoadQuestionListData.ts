@@ -8,18 +8,26 @@ type OptionType = {
 };
 
 function useLoadQuestionListData(opt: Partial<OptionType> = {}) {
-  const { isStar = false, isDeleted = false } = opt;
+  const { isStar, isDeleted } = opt;
   //important
   const [searchParams, setSearchParams] = useSearchParams();
 
   const { data, loading, error } = useRequest(
     async () => {
       const keyword = searchParams.get("keyword") || "";
-      const data = await getQuestionListService({ keyword, isStar, isDeleted });
+      const pageSize = parseInt(searchParams.get("pageSize") || "") || 10;
+      const page = parseInt(searchParams.get("page") || "") || 1;
+      const data = await getQuestionListService({
+        keyword,
+        isStar,
+        isDeleted,
+        pageSize,
+        page,
+      });
       return data;
     },
     {
-      refreshDeps: [searchParams.get("keyword")],
+      refreshDeps: [searchParams],
     }
   );
 
