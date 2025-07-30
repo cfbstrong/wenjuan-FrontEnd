@@ -3,6 +3,7 @@ import { useState } from "react";
 import styles from "./common.module.scss";
 import { useTitle } from "ahooks";
 import ListSearch from "../../components/ListSearch";
+import ListPage from "../../components/ListPage";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 import useLoadQuestionListData from "../../hooks/useLoadQuestionListData";
 import {
@@ -123,6 +124,7 @@ const Trash: FC = () => {
           dataSource={list}
           columns={tableColumns}
           rowKey={(q: any) => q._id}
+          pagination={false}
         />
       </>
     );
@@ -148,6 +150,10 @@ const Trash: FC = () => {
           )}
           {!loading && list.length > 0 && TableElement}
         </div>
+      </div>
+
+      <div className={styles.footer} style={{ marginTop: "20px" }}>
+        <ListPage total={total} />
       </div>
     </>
   );
