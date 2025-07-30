@@ -3,9 +3,10 @@ import { useState } from "react";
 import styles from "./common.module.scss";
 import ListSearch from "../../components/ListSearch";
 import { useTitle } from "ahooks";
-import { Typography, Empty, Spin } from "antd";
+import { Typography, Empty, Spin, Pagination } from "antd";
 import QuestionCard from "../../components/QuestionCard";
 import useLoadQuestionListData from "../../hooks/useLoadQuestionListData";
+import ListPage from "../../components/ListPage";
 
 const { Title } = Typography;
 
@@ -74,6 +75,10 @@ const Star: FC = (props) => {
               return <QuestionCard key={q._id} {...q} />;
             })}
         </div>
+      </div>
+
+      <div className={styles.footer}>
+        <ListPage total={total} />
       </div>
     </>
   );
