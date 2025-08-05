@@ -31,3 +31,24 @@ export async function getQuestionListService(
   })) as ResDataType;
   return data;
 }
+
+//更新单个问卷
+export async function updateQuestionService(
+  id: string,
+  opt: { [key: string]: any }
+): Promise<ResDataType> {
+  const data = instance.patch(`/api/question/${id}`, {
+    opt,
+  }) as ResDataType;
+  return data;
+}
+
+//复制问卷
+export async function duplicateQuestionService(
+  id: string
+): Promise<ResDataType> {
+  const data = (await instance.post(
+    `/api/question/duplicate/${id}`
+  )) as ResDataType;
+  return data;
+}
