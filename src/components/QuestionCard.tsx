@@ -89,7 +89,7 @@ const QuestionCard: FC<PropsType> = (props) => {
 
   const { loading: loadingDetele, run: handleDeleteService } = useRequest(
     async () => {
-      const data = await updateQuestionService(props._id, { isDelete: true });
+      const data = await updateQuestionService(props._id, { isDeleted: true });
       return data;
     },
     {

@@ -1,14 +1,27 @@
 import React, { FC } from "react";
 import styles from "./Login.module.scss";
-import { Space, Typography, Button, Checkbox, Form, Input } from "antd";
-import { Link } from "react-router-dom";
+import {
+  Space,
+  Typography,
+  Button,
+  Checkbox,
+  Form,
+  Input,
+  message,
+} from "antd";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { UserAddOutlined } from "@ant-design/icons";
+import { loginService } from "../services/user";
+import { useRequest } from "ahooks";
+import { setToken } from "../utils/user-token";
 
 const { Title } = Typography;
 
 const Login: FC = () => {
   const [form] = Form.useForm();
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const { remberUsername, remberPassword } = getUsernameAndPassword(
@@ -39,8 +52,24 @@ const Login: FC = () => {
     localStorage.removeItem("password");
   };
 
+  const { run: login } = useRequest(
+    async (username: string, password: string) => {
+      const data = await loginService(username, password);
+      return data;
+    },
+    {
+      manual: true,
+      onSuccess: (data) => {
+        const { token } = data;
+        setToken(token);
+        message.success("登录成功");
+        navigate("/manage/list");
+      },
+    }
+  );
+
   const onFinish = (values: any) => {
-    console.log("Success:", values);
+    // console.log("Success:", values);
     const { username, password, remember } = values;
 
     if (remember) {
@@ -50,7 +79,10 @@ const Login: FC = () => {
       //清除记录
       removeUsernameAndPassword();
     }
+
+    login(username, password); //发送请求
   };
+
   return (
     <div className={styles.container}>
       <div>

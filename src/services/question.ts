@@ -52,3 +52,15 @@ export async function duplicateQuestionService(
   )) as ResDataType;
   return data;
 }
+
+//批量删除问卷
+export async function deleteQuestionService(
+  ids: string[]
+): Promise<ResDataType> {
+  const data = (await instance.delete(`/api/question`, {
+    data: {
+      ids,
+    },
+  })) as ResDataType;
+  return data;
+}

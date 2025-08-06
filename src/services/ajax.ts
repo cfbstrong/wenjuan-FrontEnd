@@ -1,8 +1,14 @@
 import axios from "axios";
 import { message } from "antd";
+import { getToken } from "../utils/user-token";
 
 const instance = axios.create({
   timeout: 100000,
+});
+
+instance.interceptors.request.use((config) => {
+  config.headers.Authorization = `Bearer ${getToken()}`;
+  return config;
 });
 
 instance.interceptors.response.use((response) => {

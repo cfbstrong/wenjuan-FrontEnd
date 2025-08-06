@@ -1,14 +1,34 @@
 import React, { FC } from "react";
-import { Space, Typography, Button, Form, Input } from "antd";
+import { Space, Typography, Button, Form, Input, message } from "antd";
 import { UserAddOutlined } from "@ant-design/icons";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styles from "./Register.module.scss";
+import { registerService } from "../services/user";
+import { useRequest } from "ahooks";
 
 const { Title } = Typography;
 
-const Login: FC = () => {
+const Register: FC = () => {
+  const navigate = useNavigate();
+
+  const { run: register } = useRequest(
+    async (username: string, password: string, nickname?: string) => {
+      await registerService(username, password, nickname);
+    },
+    {
+      manual: true,
+      onSuccess: () => {
+        message.success("注册成功");
+        navigate("/login");
+      },
+    }
+  );
+
   const onFinish = (values: any) => {
-    console.log("Success:", values);
+    // console.log("Success:", values);
+    const { username, password, nickname } = values;
+
+    register(username, password, nickname); //发送请求
   };
 
   return (
@@ -94,4 +114,4 @@ const Login: FC = () => {
   );
 };
 
-export default Login;
+export default Register;
