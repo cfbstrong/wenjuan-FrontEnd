@@ -1,11 +1,15 @@
 import React, { FC } from "react";
 import { useState } from "react";
 import styles from "./common.module.scss";
-import { useTitle } from "ahooks";
+import { useTitle, useRequest } from "ahooks";
 import ListSearch from "../../components/ListSearch";
 import ListPage from "../../components/ListPage";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 import useLoadQuestionListData from "../../hooks/useLoadQuestionListData";
+import {
+  updateQuestionService,
+  deleteQuestionService,
+} from "../../services/question";
 import {
   Typography,
   Empty,
@@ -21,32 +25,32 @@ import {
 const { Title } = Typography;
 const { confirm } = Modal;
 
-const rawQuestionList = [
-  {
-    _id: "q1",
-    title: "What is React?",
-    isPublished: false,
-    answerCount: 2,
-    createdAt: "2022-01-01",
-    isStar: true,
-  },
-  {
-    _id: "q2",
-    title: "What is React?",
-    isPublished: true,
-    answerCount: 2,
-    createdAt: "2022-01-01",
-    isStar: true,
-  },
-  {
-    _id: "q3",
-    title: "What is React?",
-    isPublished: true,
-    answerCount: 2,
-    createdAt: "2022-01-01",
-    isStar: true,
-  },
-];
+// const rawQuestionList = [
+//   {
+//     _id: "q1",
+//     title: "What is React?",
+//     isPublished: false,
+//     answerCount: 2,
+//     createdAt: "2022-01-01",
+//     isStar: true,
+//   },
+//   {
+//     _id: "q2",
+//     title: "What is React?",
+//     isPublished: true,
+//     answerCount: 2,
+//     createdAt: "2022-01-01",
+//     isStar: true,
+//   },
+//   {
+//     _id: "q3",
+//     title: "What is React?",
+//     isPublished: true,
+//     answerCount: 2,
+//     createdAt: "2022-01-01",
+//     isStar: true,
+//   },
+// ];
 
 const tableColumns = [
   {
@@ -78,10 +82,46 @@ const Trash: FC = () => {
   useTitle("问卷星-回收站");
 
   // const [questionList, setQuestionList] = useState(rawQuestionList);
-  const { data = {}, loading } = useLoadQuestionListData({ isDeleted: true });
+  const {
+    data = {},
+    loading,
+    refresh,
+  } = useLoadQuestionListData({ isDeleted: true });
   const { total = 0, list = [] } = data;
 
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]); // important 这个数组用来装被选中的key
+
+  //处理假删除的恢复(传递给服务端的是一个id,使用for await of传递数组一个一个的循环处理)
+  const { loading: recoverLoading, run: handleRecover } = useRequest(
+    async () => {
+      for await (const key of selectedRowKeys) {
+        //important  key--> _id  q1  q2
+        console.log(key);
+        await updateQuestionService(key as string, { isDeleted: false });
+      }
+    },
+    {
+      manual: true,
+      onSuccess: () => {
+        message.success("恢复成功");
+        refresh(); //手动刷新列表，重新执行useLoadQuestionListData hook 去获取新的列表数据
+      },
+    }
+  );
+
+  //处理真删除(传递给服务端的是一个数组[id,id,id]进行批量删除)
+  const { loading: deleteLoading, run: handleDeleteService } = useRequest(
+    async () => {
+      await deleteQuestionService(selectedRowKeys as string[]);
+    },
+    {
+      manual: true,
+      onSuccess: () => {
+        message.success("删除成功");
+        refresh(); //手动刷新列表，重新执行useLoadQuestionListData hook 去获取新的列表数据
+      },
+    }
+  );
 
   const handleDelete = () => {
     confirm({
@@ -99,7 +139,7 @@ const Trash: FC = () => {
 
   const rowSelection = {
     onChange: (selectedRowKeys: React.Key[]) => {
-      // console.log(selectedRowKeys); //这里能拿到被选中的key
+      // console.log(selectedRowKeys, typeof selectedRowKeys); //这里能拿到被选中的key
       setSelectedRowKeys(selectedRowKeys);
     },
   };
@@ -108,13 +148,17 @@ const Trash: FC = () => {
     (
       <>
         <Space style={{ marginBottom: "25px" }}>
-          <Button type="primary" disabled={selectedRowKeys.length === 0}>
+          <Button
+            type="primary"
+            disabled={selectedRowKeys.length === 0 || recoverLoading}
+            onClick={handleRecover}
+          >
             恢复
           </Button>
           <Button
             danger
-            disabled={selectedRowKeys.length === 0}
-            onClick={handleDelete}
+            disabled={selectedRowKeys.length === 0 || deleteLoading}
+            onClick={handleDeleteService}
           >
             彻底删除
           </Button>
