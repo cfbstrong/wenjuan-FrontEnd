@@ -15,7 +15,7 @@ const userReducer = createSlice({
     loginReducer(state, action) {
       return action.payload;
     },
-    logoutReducer(state, action) {
+    logoutReducer() {
       return { username: "", nickname: "" };
     },
   },
