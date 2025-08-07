@@ -6,15 +6,23 @@ import { getUserInfoService } from "../services/user";
 import { Button, Space, message } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import { removeToken } from "../utils/user-token";
+import useGetUserInfo from "../hooks/useGetUserInfo";
+import { useDispatch } from "react-redux";
+import { logoutReducer } from "../store/userReducer";
 
 const UserInfo: FC = () => {
-  const { data } = useRequest(getUserInfoService);
-  const { nickname, username } = data || {};
+  //不用发送请求获取用户信息了，直接在redux中获取
+  // const { data } = useRequest(getUserInfoService);
+  // const { nickname, username } = data || {};
+
+  const { nickname, username } = useGetUserInfo();
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleLogout = () => {
     removeToken();
+    dispatch(logoutReducer()); //清空redux中的用户信息
     message.success("退出成功");
     navigate("/login");
   };
