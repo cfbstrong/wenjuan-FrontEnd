@@ -3,12 +3,13 @@ import styles from "./index.module.scss";
 import EditCanvas from "./EditCanvas";
 import { getQuestionService } from "../../../services/question";
 import { useEffect } from "react";
-
+import { useDispatch } from "react-redux";
+import { changeSelectedId } from "../../../store/componentsReducer";
 import { useLoadQuestionData } from "../../../hooks/useLoadQuestionData";
 
 const Edit: FC = () => {
   // useEffect(() => {
-  //   //important 异步函数要多写一个函数在useEffect中，不能直接写异步函数
+  //important 异步函数要多写一个函数在useEffect中，不能直接写异步函数
   //   async function getQuestion(id: string) {
   //     const data = await getQuestionService(id);
   //     const { title, id } = data;
@@ -17,6 +18,11 @@ const Edit: FC = () => {
   // }, []);
 
   const { loading } = useLoadQuestionData();
+  const dispatch = useDispatch();
+
+  function clearSelected() {
+    dispatch(changeSelectedId(""));
+  }
 
   return (
     <div className={styles.container}>
@@ -26,7 +32,12 @@ const Edit: FC = () => {
       <div style={{ height: "40px" }}>Header</div>
       <div className={styles.content}>
         <div className={styles.left}>left</div>
-        <div className={styles.center}>
+        <div
+          className={styles.center}
+          onClick={() => {
+            clearSelected();
+          }}
+        >
           <div className={styles["canvas-wapper"]}>
             <EditCanvas loading={loading} />
           </div>

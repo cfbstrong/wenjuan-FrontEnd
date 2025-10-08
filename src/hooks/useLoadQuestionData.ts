@@ -49,8 +49,17 @@ export const useLoadQuestionData = () => {
 
   //将数据放入redux中
   useEffect(() => {
+    //important : 异步网络请求适合用useEffect，同时设置依赖项[data]
+    //一开始由于网络请求需要时间所以没有数据，后面拿到数据之后，需要再次设置redux中的数据
     const { componentList = [] } = data || {};
-    dispatch(resetComponents({ componentList, selectedId: "" }));
+
+    let selectedId = "";
+
+    if (componentList.length > 0) {
+      selectedId = componentList[0].fe_id; //当画布上有组件显示的时候，默认选中第一个
+    }
+
+    dispatch(resetComponents({ componentList, selectedId }));
   }, [data]);
 
   return { loading, error };
