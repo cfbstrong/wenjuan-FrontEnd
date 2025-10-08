@@ -1,4 +1,6 @@
 import React, { FC } from "react";
+import styles from "./index.module.scss";
+import EditCanvas from "./EditCanvas";
 import { getQuestionService } from "../../../services/question";
 import { useEffect } from "react";
 
@@ -14,12 +16,23 @@ const Edit: FC = () => {
   //   getQuestion("1");
   // }, []);
 
-  const { data, loading } = useLoadQuestionData();
+  const { loading } = useLoadQuestionData();
 
   return (
-    <div>
-      Edit page
-      {loading ? <div>Loading...</div> : <div>{JSON.stringify(data)}</div>}
+    <div className={styles.container}>
+      {/* Edit page
+      {loading ? <div>Loading...</div> : <div>{JSON.stringify(data)}</div>} */}
+
+      <div style={{ height: "40px" }}>Header</div>
+      <div className={styles.content}>
+        <div className={styles.left}>left</div>
+        <div className={styles.center}>
+          <div className={styles["canvas-wapper"]}>
+            <EditCanvas loading={loading} />
+          </div>
+        </div>
+        <div className={styles.right}>right</div>
+      </div>
     </div>
   );
 };

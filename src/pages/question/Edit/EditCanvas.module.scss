@@ -1,0 +1,21 @@
+.canvas {
+  min-height: 100%;
+  background-color: #fff;
+  overflow: hidden; //important
+
+  .component-wapper {
+    margin: 12px;
+    border: 1px solid #fff;
+    padding: 12px;
+    border-radius: 3px;
+
+    &:hover {
+      //important
+      border-color: #d8d8d8;
+    }
+  }
+}
+
+.component {
+  pointer-events: none; //屏蔽鼠标行为，组件不让点击到
+}
