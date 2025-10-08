@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ComponentPropsType } from "../../components/QuestionComponents";
+import { produce } from "immer";
 
 //每一个组件的类型
 export type ComponentInfoType = {
@@ -38,8 +39,20 @@ const componentsSlice = createSlice({
     // 相反，任何对数据的修改都应该通过：创建一个新的数据结构来实现。
     // 这种设计模式在 React 和 Redux 等库中非常重要，因为它有助于简化状态管理、优化性能、避免意外的副作用，并且使得代码更容易理解和维护。
     // immer 是一个库，允许你以可变的方式编写代码，但最终会生成不可变的结果。
+
+    //全局共享selectedId
+    // changeSelectedId: (
+    //   state: ComponentsStateType,
+    //   action: PayloadAction<string>
+    // ) => {},
+    //immer写法
+    changeSelectedId: produce(
+      (state: ComponentsStateType, action: PayloadAction<string>) => {
+        state.selectedId = action.payload;
+      }
+    ),
   },
 });
 
 export default componentsSlice.reducer;
-export const { resetComponents } = componentsSlice.actions;
+export const { resetComponents, changeSelectedId } = componentsSlice.actions;

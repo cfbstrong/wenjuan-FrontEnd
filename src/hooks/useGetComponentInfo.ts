@@ -9,9 +9,9 @@ const useGetComponentInfo = () => {
   });
 
   // important
-  const { componentList } = componentInfo as ComponentsStateType;
+  const { componentList, selectedId } = componentInfo as ComponentsStateType;
 
-  return componentList;
+  return { componentList, selectedId };
 };
 
 export default useGetComponentInfo;
