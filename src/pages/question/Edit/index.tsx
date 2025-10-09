@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { changeSelectedId } from "../../../store/componentsReducer";
 import { useLoadQuestionData } from "../../../hooks/useLoadQuestionData";
+import LeftPanel from "./LeftPanel";
 
 const Edit: FC = () => {
   // useEffect(() => {
@@ -31,7 +32,9 @@ const Edit: FC = () => {
 
       <div style={{ height: "40px" }}>Header</div>
       <div className={styles.content}>
-        <div className={styles.left}>left</div>
+        <div className={styles.left}>
+          <LeftPanel />
+        </div>
         <div
           className={styles.center}
           onClick={() => {
