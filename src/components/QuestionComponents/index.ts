@@ -26,6 +26,21 @@ const ComponetConfList = [QuesionInputConf, QuesionTitleConf];
 //                 isCenter: false,
 //               },
 //             },
+
+//组件分组显示在左侧面板：组件库 中
+export const ComponentGroupList = [
+  {
+    groupId: "textGroup",
+    groupName: "文本显示",
+    componentList: [QuesionTitleConf],
+  },
+  {
+    groupId: "inputGroup",
+    groupName: "用户输入",
+    componentList: [QuesionInputConf],
+  },
+];
+
 export const getComponentConfByType = (type: string) => {
   //通过type找到对应的组件，并返回componentConf    important
 
