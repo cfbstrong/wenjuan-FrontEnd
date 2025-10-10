@@ -1,6 +1,7 @@
-export * from "./interface";
 import { QuestionTitleDefaultProps } from "./interface";
 import Component from "./Component";
+
+export * from "./interface";
 
 // Title
 //             {

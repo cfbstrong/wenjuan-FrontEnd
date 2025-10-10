@@ -1,3 +1,5 @@
+import { FC } from "react";
+
 import QuesionInputConf, {
   QuestionInputPropsType,
 } from "../QuestionComponents/QuestionInput";
@@ -9,6 +11,13 @@ import QuesionTitleConf, {
 export type ComponentPropsType =
   | QuestionInputPropsType
   | QuestionTitlePropsType;
+
+export type ComponentConfType = {
+  type: string;
+  title: string;
+  props: ComponentPropsType;
+  Component: FC<ComponentPropsType>;
+};
 
 //统一管理QuestionComponents中各个组件的所有信息
 const ComponetConfList = [QuesionInputConf, QuesionTitleConf];

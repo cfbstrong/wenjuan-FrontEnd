@@ -51,8 +51,28 @@ const componentsSlice = createSlice({
         state.selectedId = action.payload;
       }
     ),
+
+    //添加组件  点击组件库，添加组件到画布中
+    addComponent: produce(
+      (
+        state: ComponentsStateType,
+        action: PayloadAction<ComponentInfoType>
+      ) => {
+        const index = state.componentList.findIndex((c) => {
+          return c.fe_id === state.selectedId;
+        });
+        if (index < 0) {
+          //当前如果没有选择组件，则加入到最后
+          state.componentList.push(action.payload);
+        } else {
+          //如果选中组件，则加入到选中组件的后面
+          state.componentList.splice(index + 1, 0, action.payload);
+        }
+      }
+    ),
   },
 });
 
 export default componentsSlice.reducer;
-export const { resetComponents, changeSelectedId } = componentsSlice.actions;
+export const { resetComponents, changeSelectedId, addComponent } =
+  componentsSlice.actions;
