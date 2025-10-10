@@ -33,9 +33,10 @@
 //           ],
 // 后端返回的组件数据结构如上
 
-export * from "./interface";
 import { QuestionInputDefaultProps } from "./interface";
 import Component from "./Component";
+
+export * from "./interface";
 
 //          {
 //               id: Random.id(),
