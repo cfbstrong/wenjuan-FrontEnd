@@ -18,6 +18,7 @@ export default {
   type: "questionTitle",
   title: "标题",
   props: QuestionTitleDefaultProps,
-  //组件本身
+  //组件本身, 画布以及左侧面板显示的组件
   Component,
+  // 右侧面板显示的配置组件
 };
