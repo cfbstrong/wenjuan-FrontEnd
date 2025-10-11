@@ -10,7 +10,7 @@ const { Option } = Select;
 // 这意味着当表单提交时，agreement 的值将是 checked 的布尔值（true 或 false）。
 
 const PropComponent: FC<QuestionTitlePropsType> = (props) => {
-  const { title, level, isCenter } = props;
+  const { title, level, isCenter, onChange } = props;
 
   const [form] = Form.useForm();
   useEffect(() => {
@@ -22,9 +22,16 @@ const PropComponent: FC<QuestionTitlePropsType> = (props) => {
     });
   }, [title, level, isCenter]);
 
+  function handleValueChange() {
+    if (onChange) {
+      onChange(form.getFieldsValue());
+    }
+  }
+
   return (
     <Form
       form={form}
+      onValuesChange={() => handleValueChange()}
       layout="vertical"
       initialValues={{
         title,

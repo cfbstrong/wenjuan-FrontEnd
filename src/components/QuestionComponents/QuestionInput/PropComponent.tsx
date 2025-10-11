@@ -9,7 +9,7 @@ const { TextArea } = Input;
 //label：用于显示表单控件的标签文本，帮助用户理解控件的用途。
 //name：用于标识表单控件的名称，主要用于表单提交、校验和状态管理。
 const PropComponent: FC<QuestionInputPropsType> = (props) => {
-  const { title, placeholder } = props;
+  const { title, placeholder, onChange } = props;
   // console.log("props22", props);
 
   //important
@@ -27,10 +27,17 @@ const PropComponent: FC<QuestionInputPropsType> = (props) => {
     });
   }, [title, placeholder]);
 
+  function handleValueChange() {
+    if (onChange) {
+      onChange(form.getFieldsValue());
+    }
+  }
+
   return (
     <Form
       form={form}
       layout="vertical"
+      onValuesChange={() => handleValueChange()}
       initialValues={{
         title,
         placeholder,
