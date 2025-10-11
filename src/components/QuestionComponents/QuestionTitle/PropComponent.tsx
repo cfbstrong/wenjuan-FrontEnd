@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import { QuestionTitlePropsType } from "./interface";
 
 import { Form, Input, Checkbox, Select } from "antd";
@@ -12,8 +12,19 @@ const { Option } = Select;
 const PropComponent: FC<QuestionTitlePropsType> = (props) => {
   const { title, level, isCenter } = props;
 
+  const [form] = Form.useForm();
+  useEffect(() => {
+    // 当 props 发生变化时，更新表单的值
+    form.setFieldsValue({
+      title,
+      level,
+      isCenter,
+    });
+  }, [title, level, isCenter]);
+
   return (
     <Form
+      form={form}
       layout="vertical"
       initialValues={{
         title,

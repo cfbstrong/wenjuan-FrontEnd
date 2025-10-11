@@ -35,6 +35,7 @@
 
 import { QuestionInputDefaultProps } from "./interface";
 import Component from "./Component";
+import PropComponent from "./PropComponent";
 
 export * from "./interface";
 
@@ -48,10 +49,21 @@ export * from "./interface";
 //                 isCenter: false,
 //               },
 //             },
+
+// 这里是前端自己定义的最方便开发的数据类型
 export default {
   type: "questionInput",
   title: "标题",
   props: QuestionInputDefaultProps,
   //组件本身
   Component,
+  PropComponent,
 };
+
+// 适配后端返回数据 所写的 类型
+// export type ComponentInfoType = {
+//   fe_id: string;
+//   type: string;
+//   title: string;
+//   props: ComponentPropsType;
+// };

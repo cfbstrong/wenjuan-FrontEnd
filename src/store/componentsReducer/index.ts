@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ComponentPropsType } from "../../components/QuestionComponents";
 import { produce } from "immer";
 
-//每一个组件的类型
+//每一个组件的类型 important 适配后端返回数据的类型
 export type ComponentInfoType = {
   fe_id: string;
   type: string;
