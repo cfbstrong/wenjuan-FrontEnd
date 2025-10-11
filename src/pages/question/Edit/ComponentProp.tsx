@@ -1,11 +1,23 @@
 import React, { FC } from "react";
-import PropComponent from "../../../components/QuestionComponents/QuestionInput/PropComponent";
-import TitlePropComponent from "../../../components/QuestionComponents/QuestionTitle/PropComponent";
+import useGetComponentInfo from "../../../hooks/useGetComponentInfo";
+import { getComponentConfByType } from "../../../components/QuestionComponents";
 
 const ComponentProp: FC = () => {
+  const { selectedComponent } = useGetComponentInfo();
+
+  if (!selectedComponent) return null;
+
+  const { type, props } = selectedComponent;
+
+  const componentConf = getComponentConfByType(type);
+
+  if (!componentConf) return null;
+
+  const { PropComponent } = componentConf;
+
   return (
     <div>
-      <TitlePropComponent />
+      <PropComponent {...props} />
     </div>
   );
 };

@@ -1,5 +1,6 @@
 import { QuestionTitleDefaultProps } from "./interface";
 import Component from "./Component";
+import PropComponent from "./PropComponent";
 
 export * from "./interface";
 
@@ -21,4 +22,5 @@ export default {
   //组件本身, 画布以及左侧面板显示的组件
   Component,
   // 右侧面板显示的配置组件
+  PropComponent,
 };

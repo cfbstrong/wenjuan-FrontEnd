@@ -52,6 +52,7 @@ export const ComponentGroupList = [
 
 export const getComponentConfByType = (type: string) => {
   //通过type找到对应的组件，并返回componentConf    important
+  // 通过后端数据 匹配 前端数据 找到前端的数据格式来开发
 
   // const componentConf = ComponetConfList.find(
   //   (componentConf) => componentConf.type === type
