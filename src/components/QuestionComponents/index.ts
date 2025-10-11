@@ -17,6 +17,7 @@ export type ComponentConfType = {
   title: string;
   props: ComponentPropsType;
   Component: FC<ComponentPropsType>;
+  PropComponent: FC<ComponentPropsType>;
 };
 
 //统一管理QuestionComponents中各个组件的所有信息

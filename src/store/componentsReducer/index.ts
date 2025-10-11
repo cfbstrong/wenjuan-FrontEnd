@@ -70,9 +70,27 @@ const componentsSlice = createSlice({
         }
       }
     ),
+
+    //修改props
+    changeComponentProps: produce(
+      (
+        state: ComponentsStateType,
+        action: PayloadAction<ComponentPropsType>
+      ) => {
+        const selectedComponent = state.componentList.find(
+          (c) => c.fe_id === state.selectedId
+        );
+        if (!selectedComponent) return;
+        selectedComponent.props = action.payload;
+      }
+    ),
   },
 });
 
 export default componentsSlice.reducer;
-export const { resetComponents, changeSelectedId, addComponent } =
-  componentsSlice.actions;
+export const {
+  resetComponents,
+  changeSelectedId,
+  addComponent,
+  changeComponentProps,
+} = componentsSlice.actions;
