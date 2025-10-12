@@ -8,6 +8,7 @@ import { changeSelectedId } from "../../../store/componentsReducer";
 import { useLoadQuestionData } from "../../../hooks/useLoadQuestionData";
 import LeftPanel from "./LeftPanel";
 import RightPanel from "./RightPanel";
+import EditHeader from "./EditHeader";
 
 const Edit: FC = () => {
   // useEffect(() => {
@@ -31,7 +32,7 @@ const Edit: FC = () => {
       {/* Edit page
       {loading ? <div>Loading...</div> : <div>{JSON.stringify(data)}</div>} */}
 
-      <div style={{ height: "40px" }}>Header</div>
+      <EditHeader />
       <div className={styles.content}>
         <div className={styles.left}>
           <LeftPanel />
