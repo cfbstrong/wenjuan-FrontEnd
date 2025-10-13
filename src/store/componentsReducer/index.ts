@@ -2,6 +2,8 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ComponentPropsType } from "../../components/QuestionComponents";
 import { produce } from "immer";
 
+import { getNextSelectedId } from "./utils";
+
 //每一个组件的类型 important 适配后端返回数据的类型
 export type ComponentInfoType = {
   fe_id: string;
@@ -84,6 +86,22 @@ const componentsSlice = createSlice({
         selectedComponent.props = action.payload;
       }
     ),
+
+    //删除选中组件
+    deleteSelectedComponent: produce((state: ComponentsStateType) => {
+      const index = state.componentList.findIndex(
+        (c) => c.fe_id === state.selectedId
+      );
+
+      //计算下一个应该被选中组件的selectedId
+      const newSelectedId = getNextSelectedId(
+        state.componentList,
+        state.selectedId
+      );
+
+      state.componentList.splice(index, 1);
+      state.selectedId = newSelectedId;
+    }),
   },
 });
 
@@ -93,4 +111,5 @@ export const {
   changeSelectedId,
   addComponent,
   changeComponentProps,
+  deleteSelectedComponent,
 } = componentsSlice.actions;
