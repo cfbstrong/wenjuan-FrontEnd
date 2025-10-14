@@ -48,29 +48,31 @@ const EditCanvas: FC<PropsType> = (props) => {
 
   return (
     <div className={styles.canvas}>
-      {componentList.map((component) => {
-        const { fe_id } = component;
+      {componentList
+        .filter((c) => !c.isHidden)
+        .map((component) => {
+          const { fe_id } = component;
 
-        //根据selectedId来设置被选中样式 important
-        const wapperDefaultStyle = styles["component-wapper"];
-        const seletedStyle = styles.selected;
-        const wapperStyle = classNames({
-          [wapperDefaultStyle]: true, //默认样式
-          [seletedStyle]: selectedId === fe_id, //被选中样式
-        });
+          //根据selectedId来设置被选中样式 important
+          const wapperDefaultStyle = styles["component-wapper"];
+          const seletedStyle = styles.selected;
+          const wapperStyle = classNames({
+            [wapperDefaultStyle]: true, //默认样式
+            [seletedStyle]: selectedId === fe_id, //被选中样式
+          });
 
-        return (
-          <div
-            key={fe_id}
-            className={wapperStyle}
-            onClick={(e) => {
-              handleClick(e, fe_id);
-            }}
-          >
-            <div className={styles.component}>{getComponent(component)}</div>
-          </div>
-        );
-      })}
+          return (
+            <div
+              key={fe_id}
+              className={wapperStyle}
+              onClick={(e) => {
+                handleClick(e, fe_id);
+              }}
+            >
+              <div className={styles.component}>{getComponent(component)}</div>
+            </div>
+          );
+        })}
       {/* <div className={styles["component-wapper"]}>
         <div className={styles.component}>
           <QuestionInput />

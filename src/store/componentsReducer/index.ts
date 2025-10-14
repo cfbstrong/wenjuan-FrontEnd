@@ -9,6 +9,7 @@ export type ComponentInfoType = {
   fe_id: string;
   type: string;
   title: string;
+  isHidden?: boolean;
   //important 为了适配这个属性，有小技巧，为每个组件建立了index.ts文件，并统一在QuestionComponent文件的index.ts中汇总
   props: ComponentPropsType;
 };
@@ -102,6 +103,28 @@ const componentsSlice = createSlice({
       state.componentList.splice(index, 1);
       state.selectedId = newSelectedId;
     }),
+
+    //隐藏/显示组件
+    changeComponentHiddden: produce(
+      (
+        state: ComponentsStateType,
+        action: PayloadAction<{ fe_id: string; isHidden: boolean }>
+      ) => {
+        const curComponent = state.componentList.find(
+          (c) => c.fe_id === action.payload.fe_id
+        );
+        if (curComponent) {
+          curComponent.isHidden = action.payload.isHidden;
+        }
+
+        //重新计算selectedId
+        const newSelectedId = getNextSelectedId(
+          state.componentList,
+          action.payload.fe_id
+        );
+        state.selectedId = newSelectedId;
+      }
+    ),
   },
 });
 
@@ -112,4 +135,5 @@ export const {
   addComponent,
   changeComponentProps,
   deleteSelectedComponent,
+  changeComponentHiddden,
 } = componentsSlice.actions;
