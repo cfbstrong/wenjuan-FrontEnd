@@ -12,7 +12,7 @@ const ComponentProp: FC = () => {
 
   if (!selectedComponent) return null;
 
-  const { type, props } = selectedComponent;
+  const { type, props, isLocked } = selectedComponent;
 
   const componentConf = getComponentConfByType(type);
 
@@ -32,7 +32,7 @@ const ComponentProp: FC = () => {
 
   return (
     <div>
-      <PropComponent {...props} onChange={changeProps} />
+      <PropComponent {...props} onChange={changeProps} isLocked={isLocked} />
     </div>
   );
 };

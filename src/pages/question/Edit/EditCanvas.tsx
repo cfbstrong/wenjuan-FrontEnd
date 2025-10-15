@@ -56,9 +56,11 @@ const EditCanvas: FC<PropsType> = (props) => {
           //根据selectedId来设置被选中样式 important
           const wapperDefaultStyle = styles["component-wapper"];
           const seletedStyle = styles.selected;
+          const lockedStyle = styles.locked;
           const wapperStyle = classNames({
             [wapperDefaultStyle]: true, //默认样式
             [seletedStyle]: selectedId === fe_id, //被选中样式
+            [lockedStyle]: component.isLocked, //被锁定样式
           });
 
           return (

@@ -10,6 +10,7 @@ export type ComponentInfoType = {
   type: string;
   title: string;
   isHidden?: boolean;
+  isLocked?: boolean;
   //important 为了适配这个属性，有小技巧，为每个组件建立了index.ts文件，并统一在QuestionComponent文件的index.ts中汇总
   props: ComponentPropsType;
 };
@@ -125,6 +126,21 @@ const componentsSlice = createSlice({
         state.selectedId = newSelectedId;
       }
     ),
+
+    //锁定/解锁组件
+    toogleComponentLocked: produce(
+      (
+        state: ComponentsStateType,
+        action: PayloadAction<{ fe_id: string }>
+      ) => {
+        const curComponent = state.componentList.find(
+          (c) => c.fe_id === action.payload.fe_id
+        );
+        if (curComponent) {
+          curComponent.isLocked = !curComponent.isLocked;
+        }
+      }
+    ),
   },
 });
 
@@ -136,4 +152,5 @@ export const {
   changeComponentProps,
   deleteSelectedComponent,
   changeComponentHiddden,
+  toogleComponentLocked,
 } = componentsSlice.actions;

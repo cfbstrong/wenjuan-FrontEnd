@@ -3,6 +3,9 @@ export type QuestionInputPropsType = {
   placeholder?: string;
   //rightPanel组件属性改变后，同步到画布中
   onChange?: (newProps: QuestionInputPropsType) => void;
+
+  //isLocked
+  isLocked?: boolean;
 };
 
 export const QuestionInputDefaultProps: QuestionInputPropsType = {

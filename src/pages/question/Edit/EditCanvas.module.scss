@@ -20,6 +20,13 @@
   border-color: #1890ff !important; //设置组件被选中后边框的颜色
 }
 
+.locked {
+  //透明
+  opacity: 0.5;
+  //指针样式不可用
+  cursor: not-allowed;
+}
+
 .component {
   pointer-events: none; //屏蔽鼠标行为，组件不让点击到
 }

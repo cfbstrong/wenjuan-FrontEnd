@@ -7,6 +7,8 @@ export type QuestionTitlePropsType = {
   isCenter?: boolean;
   //rightPanel组件属性改变后，同步到画布中
   onChange?: (newProps: QuestionTitlePropsType) => void;
+
+  isLocked?: boolean;
 };
 
 export const QuestionTitleDefaultProps: QuestionTitlePropsType = {
