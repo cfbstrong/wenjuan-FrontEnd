@@ -4,6 +4,8 @@ import {
   DeleteOutlined,
   EyeInvisibleOutlined,
   LockOutlined,
+  CopyOutlined,
+  BlockOutlined,
 } from "@ant-design/icons";
 
 import { useDispatch } from "react-redux";
@@ -55,6 +57,20 @@ const EditToolbar: FC = () => {
           shape="circle"
           type={isLocked ? "primary" : "default"}
           icon={<LockOutlined />}
+          onClick={() => handleLock()}
+        ></Button>
+      </Tooltip>
+      <Tooltip title="复制">
+        <Button
+          shape="circle"
+          icon={<CopyOutlined />}
+          onClick={() => handleLock()}
+        ></Button>
+      </Tooltip>
+      <Tooltip title="粘贴">
+        <Button
+          shape="circle"
+          icon={<BlockOutlined />}
           onClick={() => handleLock()}
         ></Button>
       </Tooltip>
