@@ -13,6 +13,8 @@ import {
   deleteSelectedComponent,
   changeComponentHiddden,
   toogleComponentLocked,
+  copySelectedComponent,
+  pasteSelectedComponent,
 } from "../../../store/componentsReducer";
 import useGetComponentInfo from "../../../hooks/useGetComponentInfo";
 
@@ -34,6 +36,16 @@ const EditToolbar: FC = () => {
   //锁定/解锁组件
   function handleLock() {
     dispatch(toogleComponentLocked({ fe_id: selectedId }));
+  }
+
+  //复制组件
+  function handleCopy() {
+    dispatch(copySelectedComponent());
+  }
+
+  //粘贴组件
+  function handlePaste() {
+    dispatch(pasteSelectedComponent());
   }
 
   return (
@@ -64,14 +76,14 @@ const EditToolbar: FC = () => {
         <Button
           shape="circle"
           icon={<CopyOutlined />}
-          onClick={() => handleLock()}
+          onClick={() => handleCopy()}
         ></Button>
       </Tooltip>
       <Tooltip title="粘贴">
         <Button
           shape="circle"
           icon={<BlockOutlined />}
-          onClick={() => handleLock()}
+          onClick={() => handlePaste()}
         ></Button>
       </Tooltip>
     </Space>

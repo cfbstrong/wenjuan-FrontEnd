@@ -59,7 +59,9 @@ export const useLoadQuestionData = () => {
       selectedId = componentList[0].fe_id; //当画布上有组件显示的时候，默认选中第一个
     }
 
-    dispatch(resetComponents({ componentList, selectedId }));
+    dispatch(
+      resetComponents({ componentList, selectedId, copiedComponent: null })
+    );
   }, [data]);
 
   return { loading, error };

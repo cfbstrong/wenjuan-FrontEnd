@@ -1,6 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ComponentPropsType } from "../../components/QuestionComponents";
 import { produce } from "immer";
+import cloneDeep from "lodash.clonedeep";
+import { nanoid } from "nanoid";
 
 import { getNextSelectedId } from "./utils";
 
@@ -19,12 +21,14 @@ export type ComponentInfoType = {
 export type ComponentsStateType = {
   selectedId: string;
   componentList: Array<ComponentInfoType>;
+  copiedComponent: ComponentInfoType | null;
 };
 
 const initialState: ComponentsStateType = {
   selectedId: "", //表明当前哪个组件被选中了，根据ID给这个组件添加被选中的样式边框，并且在redux中共享给left板/right板，让left/right显示对应的属性和可配置项
   componentList: [],
   //还有其他扩展
+  copiedComponent: null,
 };
 
 //PayloadAction<Payload = void, Meta = any>用于指定 Payload 的类型
@@ -141,6 +145,31 @@ const componentsSlice = createSlice({
         }
       }
     ),
+
+    //复制组件
+    copySelectedComponent: produce((draft: ComponentsStateType) => {
+      const selectedComponent = draft.componentList.find(
+        (c) => c.fe_id === draft.selectedId
+      );
+      if (!selectedComponent) return;
+      draft.copiedComponent = cloneDeep(selectedComponent); //深克隆
+      //修改fe_id,important
+      draft.copiedComponent.fe_id = nanoid();
+    }),
+
+    //粘贴组件
+    pasteSelectedComponent: produce((draft: ComponentsStateType) => {
+      if (!draft.copiedComponent) return;
+      const index = draft.componentList.findIndex(
+        (c) => c.fe_id === draft.selectedId
+      );
+      if (index < 0) {
+        //没有选中组件，添加到最后
+        draft.componentList.push(draft.copiedComponent);
+      } else {
+        draft.componentList.splice(index + 1, 0, draft.copiedComponent);
+      }
+    }),
   },
 });
 
@@ -153,4 +182,6 @@ export const {
   deleteSelectedComponent,
   changeComponentHiddden,
   toogleComponentLocked,
+  copySelectedComponent,
+  pasteSelectedComponent,
 } = componentsSlice.actions;
