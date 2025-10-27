@@ -17,11 +17,16 @@ import {
   pasteSelectedComponent,
 } from "../../../store/componentsReducer";
 import useGetComponentInfo from "../../../hooks/useGetComponentInfo";
+import useBindCanvasKeyPress from "../../../hooks/useBindCanvasKeyPress";
 
 const EditToolbar: FC = () => {
   const dispatch = useDispatch();
-  const { selectedId, selectedComponent } = useGetComponentInfo();
+  const { selectedId, selectedComponent, copiedComponent } =
+    useGetComponentInfo();
   const { isLocked } = selectedComponent || {}; //加个{}防止报错 important
+
+  //绑定快捷键
+  useBindCanvasKeyPress();
 
   //删除画布中组件
   function handleDelete() {
@@ -82,6 +87,7 @@ const EditToolbar: FC = () => {
       <Tooltip title="粘贴">
         <Button
           shape="circle"
+          disabled={copiedComponent === null ? true : false}
           icon={<BlockOutlined />}
           onClick={() => handlePaste()}
         ></Button>

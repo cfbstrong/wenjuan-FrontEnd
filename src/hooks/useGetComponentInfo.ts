@@ -9,11 +9,12 @@ const useGetComponentInfo = () => {
   });
 
   // important
-  const { componentList, selectedId } = componentInfo as ComponentsStateType;
+  const { componentList, selectedId, copiedComponent } =
+    componentInfo as ComponentsStateType;
 
   const selectedComponent = componentList.find((c) => c.fe_id === selectedId);
 
-  return { componentList, selectedId, selectedComponent };
+  return { componentList, selectedId, selectedComponent, copiedComponent };
 };
 
 export default useGetComponentInfo;

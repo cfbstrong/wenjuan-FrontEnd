@@ -153,13 +153,14 @@ const componentsSlice = createSlice({
       );
       if (!selectedComponent) return;
       draft.copiedComponent = cloneDeep(selectedComponent); //深克隆
-      //修改fe_id,important
-      draft.copiedComponent.fe_id = nanoid();
     }),
 
     //粘贴组件
     pasteSelectedComponent: produce((draft: ComponentsStateType) => {
       if (!draft.copiedComponent) return;
+      //修改fe_id,important
+      draft.copiedComponent.fe_id = nanoid();
+
       const index = draft.componentList.findIndex(
         (c) => c.fe_id === draft.selectedId
       );
