@@ -171,6 +171,39 @@ const componentsSlice = createSlice({
         draft.componentList.splice(index + 1, 0, draft.copiedComponent);
       }
     }),
+
+    //选中上一个组件
+    selectPrevComponent: produce((draft: ComponentsStateType) => {
+      const index = draft.componentList.findIndex(
+        (c) => c.fe_id === draft.selectedId
+      );
+
+      if (index < 0) return;
+
+      if (index === 0) {
+        //当前是第一个组件，选中最后一个
+        draft.selectedId =
+          draft.componentList[draft.componentList.length - 1].fe_id;
+      } else {
+        draft.selectedId = draft.componentList[index - 1].fe_id;
+      }
+    }),
+
+    //选中下一个组件
+    selectNextComponent: produce((draft: ComponentsStateType) => {
+      const index = draft.componentList.findIndex(
+        (c) => c.fe_id === draft.selectedId
+      );
+
+      if (index < 0) return;
+
+      if (index === draft.componentList.length - 1) {
+        //当前是最后一个组件，选中第一个
+        draft.selectedId = draft.componentList[0].fe_id;
+      } else {
+        draft.selectedId = draft.componentList[index + 1].fe_id;
+      }
+    }),
   },
 });
 
@@ -185,4 +218,6 @@ export const {
   toogleComponentLocked,
   copySelectedComponent,
   pasteSelectedComponent,
+  selectPrevComponent,
+  selectNextComponent,
 } = componentsSlice.actions;
