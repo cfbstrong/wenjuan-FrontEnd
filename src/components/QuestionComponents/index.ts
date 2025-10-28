@@ -9,12 +9,16 @@ import QuesionTitleConf, {
 import QuestionParagraphConf, {
   QuestionPragraphPropsType,
 } from "../QuestionComponents/QuestionParagraph";
+import QuestionInfoConf, {
+  QuestionInfoPropsType,
+} from "../QuestionComponents/QuestionInfo";
 
 //统一管理QuestionComponents中各个组件的props type
 export type ComponentPropsType =
   | QuestionInputPropsType
   | QuestionTitlePropsType
-  | QuestionPragraphPropsType;
+  | QuestionPragraphPropsType
+  | QuestionInfoPropsType;
 
 export type ComponentConfType = {
   type: string;
@@ -29,6 +33,7 @@ const ComponetConfList = [
   QuesionInputConf,
   QuesionTitleConf,
   QuestionParagraphConf,
+  QuestionInfoConf,
 ];
 
 // 业务重点：根据组件的type来找到QuestionComponents中对应的组件
@@ -50,7 +55,7 @@ export const ComponentGroupList = [
   {
     groupId: "textGroup",
     groupName: "文本显示",
-    componentList: [QuesionTitleConf, QuestionParagraphConf],
+    componentList: [QuesionTitleConf, QuestionParagraphConf, QuestionInfoConf],
   },
   {
     groupId: "inputGroup",
