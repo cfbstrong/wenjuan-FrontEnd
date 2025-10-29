@@ -12,13 +12,17 @@ import QuestionParagraphConf, {
 import QuestionInfoConf, {
   QuestionInfoPropsType,
 } from "../QuestionComponents/QuestionInfo";
+import QuestionTextareaConf, {
+  QuestionTextareaPropsType,
+} from "../QuestionComponents/QuestionTextarea";
 
 //统一管理QuestionComponents中各个组件的props type
 export type ComponentPropsType =
   | QuestionInputPropsType
   | QuestionTitlePropsType
   | QuestionPragraphPropsType
-  | QuestionInfoPropsType;
+  | QuestionInfoPropsType
+  | QuestionTextareaPropsType;
 
 export type ComponentConfType = {
   type: string;
@@ -28,12 +32,13 @@ export type ComponentConfType = {
   PropComponent: FC<ComponentPropsType>;
 };
 
-//统一管理QuestionComponents中各个组件的所有信息
+//统一管理QuestionComponents中各个组件的所有信息 显示在canvas 中间画布中
 const ComponetConfList = [
   QuesionInputConf,
   QuesionTitleConf,
   QuestionParagraphConf,
   QuestionInfoConf,
+  QuestionTextareaConf,
 ];
 
 // 业务重点：根据组件的type来找到QuestionComponents中对应的组件
@@ -60,7 +65,7 @@ export const ComponentGroupList = [
   {
     groupId: "inputGroup",
     groupName: "用户输入",
-    componentList: [QuesionInputConf],
+    componentList: [QuesionInputConf, QuestionTextareaConf],
   },
 ];
 
