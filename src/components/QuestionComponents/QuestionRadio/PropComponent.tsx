@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import { QuestionRadioPropsType } from "./interface";
 import { Form, Input, Select, Checkbox, Space, Button } from "antd";
 import { PlusOutlined, MinusCircleOutlined } from "@ant-design/icons";
@@ -6,9 +6,26 @@ import { PlusOutlined, MinusCircleOutlined } from "@ant-design/icons";
 const PropComponent: FC<QuestionRadioPropsType> = (props) => {
   const { title, value, vertical, options, onChange } = props;
   // console.log(options);
+  const [form] = Form.useForm();
+
+  function handleChange() {
+    // console.log(form.getFieldsValue());
+    if (onChange) {
+      onChange(form.getFieldsValue());
+    }
+  }
+
+  useEffect(() => {
+    form.setFieldsValue({ title, options, value, vertical });
+  }, [title, value, vertical, options]);
 
   return (
-    <Form layout="vertical" initialValues={{ title, options, value, vertical }}>
+    <Form
+      layout="vertical"
+      initialValues={{ title, options, value, vertical }}
+      onValuesChange={handleChange}
+      form={form}
+    >
       <Form.Item
         label="标题"
         name="title"
@@ -46,7 +63,7 @@ const PropComponent: FC<QuestionRadioPropsType> = (props) => {
                 <Button
                   type="link"
                   icon={<PlusOutlined />}
-                  onClick={() => add()}
+                  onClick={() => add({ value: "", lable: "" })}
                 >
                   添加选项
                 </Button>
@@ -56,7 +73,7 @@ const PropComponent: FC<QuestionRadioPropsType> = (props) => {
         </Form.List>
       </Form.Item>
       <Form.Item label="默认选中" name="value">
-        <Select onChange={onChange}>
+        <Select>
           {options &&
             options.map((item) => {
               const { value, label } = item;
@@ -64,7 +81,7 @@ const PropComponent: FC<QuestionRadioPropsType> = (props) => {
             })}
         </Select>
       </Form.Item>
-      <Form.Item valuePropName="checked" name="vetical">
+      <Form.Item valuePropName="checked" name="vertical">
         <Checkbox>竖向排列</Checkbox>
       </Form.Item>
     </Form>

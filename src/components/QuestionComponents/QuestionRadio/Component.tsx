@@ -9,6 +9,7 @@ const Component: FC<QuestionRadioPropsType> = (props) => {
     ...QuestionRadioDefaultProps,
     ...props,
   };
+  // console.log("value", value);
 
   return (
     <div>
@@ -18,7 +19,11 @@ const Component: FC<QuestionRadioPropsType> = (props) => {
           {options &&
             options.map((item, index) => {
               const { value, label } = item;
-              return <Radio key={value}>{label}</Radio>;
+              return (
+                <Radio key={value} value={value}>
+                  {label}
+                </Radio>
+              );
             })}
         </Space>
       </Radio.Group>
