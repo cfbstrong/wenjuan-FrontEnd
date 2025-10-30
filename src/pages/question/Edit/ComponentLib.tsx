@@ -47,7 +47,7 @@ const ComponentLib: FC = () => {
   const dispatch = useDispatch();
 
   return (
-    <div>
+    <div className={styles["componentLib-wrapper"]}>
       {ComponentGroupList.map((group, index) => {
         return (
           <div key={group.groupId}>
