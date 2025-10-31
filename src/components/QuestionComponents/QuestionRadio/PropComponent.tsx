@@ -58,11 +58,11 @@ const PropComponent: FC<QuestionRadioPropsType> = (props) => {
                 const { key, name } = item;
                 return (
                   <Space>
-                    <Form.Item name={[key, "label"]}>
+                    <Form.Item name={[name, "label"]}>
                       <Input />
                     </Form.Item>
                     <Form.Item>
-                      {key > 1 && (
+                      {index > 1 && (
                         <MinusCircleOutlined
                           style={{ cursor: "pointer" }}
                           // remove 方法的参数是一个字符串或数组，表示被删除字段的路径。这个路径与字段的 name 属性相对应
