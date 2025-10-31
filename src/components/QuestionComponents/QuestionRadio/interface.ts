@@ -1,4 +1,4 @@
-type RadioOptionType = {
+export type RadioOptionType = {
   value: string;
   label: string;
 };
@@ -18,15 +18,15 @@ export const QuestionRadioDefaultProps: QuestionRadioPropsType = {
   vertical: false,
   options: [
     {
-      value: "1",
+      value: "item1",
       label: "选项1",
     },
     {
-      value: "2",
+      value: "item2",
       label: "选项2",
     },
     {
-      value: "3",
+      value: "item3",
       label: "选项3",
     },
   ],

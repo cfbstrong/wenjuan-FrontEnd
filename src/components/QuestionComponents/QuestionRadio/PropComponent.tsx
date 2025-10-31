@@ -2,6 +2,7 @@ import React, { FC, useEffect } from "react";
 import { QuestionRadioPropsType } from "./interface";
 import { Form, Input, Select, Checkbox, Space, Button } from "antd";
 import { PlusOutlined, MinusCircleOutlined } from "@ant-design/icons";
+import { nanoid } from "nanoid";
 
 const PropComponent: FC<QuestionRadioPropsType> = (props) => {
   const { title, value, vertical, options, onChange } = props;
@@ -9,10 +10,24 @@ const PropComponent: FC<QuestionRadioPropsType> = (props) => {
   const [form] = Form.useForm();
 
   function handleChange() {
-    // console.log(form.getFieldsValue());
-    if (onChange) {
-      onChange(form.getFieldsValue());
+    //处理bug important
+    if (onChange == null) return;
+    //触发onChange函数
+    const newValues = form.getFieldsValue() as QuestionRadioPropsType;
+
+    if (newValues.options) {
+      newValues.options = newValues.options.filter(
+        (opt) => !(opt.label === null)
+      );
     }
+
+    const { options = [] } = newValues;
+    options.forEach((opt) => {
+      if (opt.value) return;
+      opt.value = nanoid(5); // 补充value，没有value会报错
+    });
+
+    onChange(newValues);
   }
 
   useEffect(() => {
@@ -63,7 +78,7 @@ const PropComponent: FC<QuestionRadioPropsType> = (props) => {
                 <Button
                   type="link"
                   icon={<PlusOutlined />}
-                  onClick={() => add({ value: "", lable: "" })}
+                  onClick={() => add({ value: "", label: "" })}
                 >
                   添加选项
                 </Button>
