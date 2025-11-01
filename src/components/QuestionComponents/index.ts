@@ -16,6 +16,7 @@ import QuestionTextareaConf, {
   QuestionTextareaPropsType,
 } from "../QuestionComponents/QuestionTextarea";
 import QuestionRadioConf from "../QuestionComponents/QuestionRadio";
+import QuestionCheckboxConf from "../QuestionComponents/QuestionCheckbox";
 
 //统一管理QuestionComponents中各个组件的props type
 export type ComponentPropsType =
@@ -41,6 +42,7 @@ const ComponetConfList = [
   QuestionInfoConf,
   QuestionTextareaConf,
   QuestionRadioConf,
+  QuestionCheckboxConf,
 ];
 
 // 业务重点：根据组件的type来找到QuestionComponents中对应的组件
@@ -67,7 +69,12 @@ export const ComponentGroupList = [
   {
     groupId: "inputGroup",
     groupName: "用户输入",
-    componentList: [QuesionInputConf, QuestionTextareaConf, QuestionRadioConf],
+    componentList: [
+      QuesionInputConf,
+      QuestionTextareaConf,
+      QuestionRadioConf,
+      QuestionCheckboxConf,
+    ],
   },
 ];
 

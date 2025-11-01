@@ -5,7 +5,7 @@ import { PlusOutlined, MinusCircleOutlined } from "@ant-design/icons";
 import { nanoid } from "nanoid";
 
 const PropComponent: FC<QuestionRadioPropsType> = (props) => {
-  const { title, value, vertical, options, onChange } = props;
+  const { title, value, vertical, options, onChange, isLocked } = props;
   // console.log(options);
   const [form] = Form.useForm();
 
@@ -40,6 +40,7 @@ const PropComponent: FC<QuestionRadioPropsType> = (props) => {
       initialValues={{ title, options, value, vertical }}
       onValuesChange={handleChange}
       form={form}
+      disabled={isLocked}
     >
       <Form.Item
         label="标题"

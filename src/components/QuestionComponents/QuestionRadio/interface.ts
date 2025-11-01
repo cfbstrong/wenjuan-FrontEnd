@@ -10,6 +10,7 @@ export type QuestionRadioPropsType = {
   options?: RadioOptionType[]; //选项列表
 
   onChange?: (newProps: QuestionRadioPropsType) => void;
+  isLocked?: boolean;
 };
 
 export const QuestionRadioDefaultProps: QuestionRadioPropsType = {
