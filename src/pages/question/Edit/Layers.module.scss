@@ -1,0 +1,20 @@
+.wrapper {
+  padding: 6px 0;
+  cursor: pointer;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  display: flex;
+
+  .title {
+    flex: auto;
+    line-height: 2;
+  }
+
+  .selected {
+    color: #1890ff;
+  }
+
+  .btn {
+    width: 50px;
+    text-align: end;
+  }
+}

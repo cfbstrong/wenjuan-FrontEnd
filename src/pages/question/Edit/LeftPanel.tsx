@@ -3,6 +3,7 @@ import { Tabs } from "antd";
 import { AppstoreAddOutlined, BarsOutlined } from "@ant-design/icons";
 
 import ComponentLib from "./ComponentLib";
+import Layers from "./Layers";
 
 //important 可以直接在antd官网里面修改实例代码 观察效果 再来修改代码
 const items = [
@@ -24,7 +25,7 @@ const items = [
         <span>图层</span>
       </div>
     ),
-    children: <div>图层</div>,
+    children: <Layers />,
   },
 ];
 
