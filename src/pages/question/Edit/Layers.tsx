@@ -1,22 +1,45 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import { useDispatch } from "react-redux";
 import styles from "./Layers.module.scss";
 import classNames from "classnames";
 import useGetComponentInfo from "../../../hooks/useGetComponentInfo";
-import { changeSelectedId } from "../../../store/componentsReducer";
-import { message } from "antd";
+import {
+  changeSelectedId,
+  changeComponentTitle,
+} from "../../../store/componentsReducer";
+import { message, Input } from "antd";
 
 const Layers: FC = () => {
+  //当前正在修改标题的组件Id
+  const [changeTitleId, setChangeTitleId] = useState("");
+
   const dispatch = useDispatch();
   const { componentList, selectedId } = useGetComponentInfo();
 
   function handleClick(fe_id: string) {
     const curComponent = componentList.find((item) => item.fe_id === fe_id);
+    // 判断是否隐藏
     if (curComponent && curComponent.isHidden) {
       message.warning("不能选中隐藏的组件");
-    } else {
-      dispatch(changeSelectedId(fe_id));
+      return;
     }
+
+    //此条件说明没被选中，则选中   1、选中 2、修改标题
+    if (selectedId !== fe_id) {
+      dispatch(changeSelectedId(fe_id));
+      return;
+    }
+
+    //此条件说明已经被选中，则修改标题
+    if (selectedId === fe_id) {
+      setChangeTitleId(fe_id);
+    }
+  }
+
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const value = e.target.value.trim();
+
+    dispatch(changeComponentTitle({ fe_id: selectedId, title: value }));
   }
 
   return (
@@ -35,7 +58,17 @@ const Layers: FC = () => {
         return (
           <div className={styles.wrapper} key={index}>
             <div onClick={() => handleClick(fe_id)} className={finalStyle}>
-              {title}
+              {/* 切换标题和输入框 */}
+              {changeTitleId === fe_id ? (
+                <Input
+                  value={title}
+                  onPressEnter={() => setChangeTitleId("")}
+                  onBlur={() => setChangeTitleId("")}
+                  onChange={handleChange}
+                />
+              ) : (
+                title
+              )}
             </div>
             <div className={styles.btn}>按钮</div>
           </div>
