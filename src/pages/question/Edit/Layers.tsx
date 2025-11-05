@@ -7,10 +7,11 @@ import {
   changeSelectedId,
   changeComponentTitle,
 } from "../../../store/componentsReducer";
-import { message, Input } from "antd";
+import { message, Input, Button, Space } from "antd";
+import { EyeInvisibleOutlined, LockOutlined } from "@ant-design/icons";
 
 const Layers: FC = () => {
-  //当前正在修改标题的组件Id
+  //当前正在修改标题的组件Id important!!!
   const [changeTitleId, setChangeTitleId] = useState("");
 
   const dispatch = useDispatch();
@@ -45,7 +46,7 @@ const Layers: FC = () => {
   return (
     <div>
       {componentList.map((component, index) => {
-        const { title, fe_id } = component;
+        const { title, fe_id, isHidden, isLocked } = component;
 
         // 样式计算
         const selectedStyle = styles.selected;
@@ -70,7 +71,24 @@ const Layers: FC = () => {
                 title
               )}
             </div>
-            <div className={styles.btn}>按钮</div>
+            <div className={styles.handler}>
+              <Space>
+                <Button
+                  size="small"
+                  shape="circle"
+                  className={!isHidden ? styles.btn : ""}
+                  icon={<EyeInvisibleOutlined />}
+                  type={isHidden ? "primary" : "text"}
+                ></Button>
+                <Button
+                  size="small"
+                  shape="circle"
+                  className={!isLocked ? styles.btn : ""}
+                  icon={<LockOutlined />}
+                  type={isLocked ? "primary" : "text"}
+                ></Button>
+              </Space>
+            </div>
           </div>
         );
       })}
