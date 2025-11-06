@@ -1,8 +1,10 @@
-import React, { FC } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { Tabs } from "antd";
 import { FileTextOutlined, SettingOutlined } from "@ant-design/icons";
 
 import ComponentProp from "./ComponentProp";
+import PageSetting from "./PageSetting";
+import useGetComponentInfo from "../../../hooks/useGetComponentInfo";
 
 const items = [
   {
@@ -23,12 +25,26 @@ const items = [
         <span>页面设置</span>
       </div>
     ),
-    children: <div>页面设置</div>,
+    children: <PageSetting />,
   },
 ];
 
 const RightPanel: FC = () => {
-  return <Tabs defaultActiveKey="prop" items={items} />;
+  // activeKey 动态切换显示的tab面板
+  const [activeKey, setActiveKey] = useState("prop");
+
+  const { selectedId } = useGetComponentInfo();
+
+  useEffect(() => {
+    if (selectedId) {
+      //说明当前选中了组件
+      setActiveKey("prop");
+    } else {
+      setActiveKey("setting");
+    }
+  }, [selectedId]);
+
+  return <Tabs activeKey={activeKey} items={items} />;
 };
 
 export default RightPanel;
