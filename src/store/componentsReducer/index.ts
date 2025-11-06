@@ -115,6 +115,7 @@ const componentsSlice = createSlice({
         state: ComponentsStateType,
         action: PayloadAction<{ fe_id: string; isHidden: boolean }>
       ) => {
+        const { isHidden, fe_id } = action.payload;
         const curComponent = state.componentList.find(
           (c) => c.fe_id === action.payload.fe_id
         );
@@ -122,12 +123,18 @@ const componentsSlice = createSlice({
           curComponent.isHidden = action.payload.isHidden;
         }
 
-        //重新计算selectedId
-        const newSelectedId = getNextSelectedId(
-          state.componentList,
-          action.payload.fe_id
-        );
-        state.selectedId = newSelectedId;
+        if (isHidden) {
+          //要隐藏
+          //重新计算selectedId
+          const newSelectedId = getNextSelectedId(
+            state.componentList,
+            action.payload.fe_id
+          );
+          state.selectedId = newSelectedId;
+        } else {
+          //要显示
+          state.selectedId = fe_id;
+        }
       }
     ),
 

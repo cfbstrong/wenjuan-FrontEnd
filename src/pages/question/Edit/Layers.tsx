@@ -6,6 +6,8 @@ import useGetComponentInfo from "../../../hooks/useGetComponentInfo";
 import {
   changeSelectedId,
   changeComponentTitle,
+  toogleComponentLocked,
+  changeComponentHiddden,
 } from "../../../store/componentsReducer";
 import { message, Input, Button, Space } from "antd";
 import { EyeInvisibleOutlined, LockOutlined } from "@ant-design/icons";
@@ -39,8 +41,17 @@ const Layers: FC = () => {
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const value = e.target.value.trim();
-
     dispatch(changeComponentTitle({ fe_id: selectedId, title: value }));
+  }
+
+  //切换隐藏/显示
+  function changeHidden(fe_id: string, isHidden: boolean) {
+    dispatch(changeComponentHiddden({ fe_id, isHidden }));
+  }
+
+  //切换锁定/解锁
+  function changeLocked(fe_id: string) {
+    dispatch(toogleComponentLocked({ fe_id }));
   }
 
   return (
@@ -79,6 +90,7 @@ const Layers: FC = () => {
                   className={!isHidden ? styles.btn : ""}
                   icon={<EyeInvisibleOutlined />}
                   type={isHidden ? "primary" : "text"}
+                  onClick={() => changeHidden(fe_id, !isHidden)}
                 ></Button>
                 <Button
                   size="small"
@@ -86,6 +98,7 @@ const Layers: FC = () => {
                   className={!isLocked ? styles.btn : ""}
                   icon={<LockOutlined />}
                   type={isLocked ? "primary" : "text"}
+                  onClick={() => changeLocked(fe_id)}
                 ></Button>
               </Space>
             </div>
