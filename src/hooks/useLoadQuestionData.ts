@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { getQuestionService } from "../services/question";
 import { useRequest } from "ahooks";
 import { resetComponents } from "../store/componentsReducer/index";
+import { resetPageInfo } from "../store/pageInfoReducer";
 import { useDispatch } from "react-redux";
 
 export const useLoadQuestionData = () => {
@@ -51,7 +52,7 @@ export const useLoadQuestionData = () => {
   useEffect(() => {
     //important : 异步网络请求适合用useEffect，同时设置依赖项[data]
     //一开始由于网络请求需要时间所以没有数据，后面拿到数据之后，需要再次设置redux中的数据
-    const { componentList = [] } = data || {};
+    const { componentList = [], title, js, css, description } = data || {};
 
     let selectedId = "";
 
@@ -62,6 +63,8 @@ export const useLoadQuestionData = () => {
     dispatch(
       resetComponents({ componentList, selectedId, copiedComponent: null })
     );
+
+    dispatch(resetPageInfo({ title, description, js, css }));
   }, [data]);
 
   return { loading, error };
