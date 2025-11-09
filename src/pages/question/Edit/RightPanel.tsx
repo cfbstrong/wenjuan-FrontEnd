@@ -35,6 +35,10 @@ const RightPanel: FC = () => {
 
   const { selectedId } = useGetComponentInfo();
 
+  function handleTabClick(key: string) {
+    setActiveKey(key);
+  }
+
   useEffect(() => {
     if (selectedId) {
       //说明当前选中了组件
@@ -44,7 +48,9 @@ const RightPanel: FC = () => {
     }
   }, [selectedId]);
 
-  return <Tabs activeKey={activeKey} items={items} />;
+  return (
+    <Tabs activeKey={activeKey} items={items} onTabClick={handleTabClick} />
+  );
 };
 
 export default RightPanel;

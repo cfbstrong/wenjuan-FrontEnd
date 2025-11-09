@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 
 import { Button, Typography, Space, Input, message } from "antd";
 import { LeftOutlined, EditOutlined, LoadingOutlined } from "@ant-design/icons";
-import { useRequest, useKeyPress } from "ahooks";
+import { useRequest, useKeyPress, useDebounceEffect } from "ahooks";
 
 import { changeTitle } from "../../../store/pageInfoReducer";
 import useGetComponentInfo from "../../../hooks/useGetComponentInfo";
@@ -14,6 +14,7 @@ import useGetPageInfo from "../../../hooks/useGetPageInfo";
 import { updateQuestionService } from "../../../services/question";
 
 import EditToolbar from "./EditToolbar";
+import { wait } from "@testing-library/user-event/dist/utils";
 
 const { Title } = Typography;
 
@@ -85,6 +86,18 @@ const SaveButton: FC = () => {
       save();
     }
   });
+
+  //监听内容变化，自动保存
+  //但不能内容一改变就保存，不能太频繁，所以用防抖(useDebounceEffect)
+  useDebounceEffect(
+    () => {
+      save();
+    },
+    [componentList, title, js, css, description],
+    {
+      wait: 1000,
+    }
+  );
 
   return (
     <Button
