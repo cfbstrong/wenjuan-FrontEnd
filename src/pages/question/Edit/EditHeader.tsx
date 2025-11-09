@@ -111,6 +111,46 @@ const SaveButton: FC = () => {
   );
 };
 
+//发布按钮 组件
+const PublishButton: FC = () => {
+  const { id } = useParams();
+  const { componentList } = useGetComponentInfo();
+  const { title, js, css, description } = useGetPageInfo();
+  const nav = useNavigate();
+
+  const { loading, run: pub } = useRequest(
+    async () => {
+      if (!id) return;
+      await updateQuestionService(id, {
+        componentList,
+        title,
+        js,
+        css,
+        description,
+        isPublished: true,
+      });
+    },
+    {
+      manual: true,
+      onSuccess: () => {
+        message.success("发布成功");
+        nav(`/question/stat/${id}`); //发布成功跳转到统计页面
+      },
+    }
+  );
+
+  return (
+    <Button
+      type="primary"
+      onClick={pub}
+      disabled={loading}
+      icon={loading ? <LoadingOutlined /> : null}
+    >
+      发布
+    </Button>
+  );
+};
+
 const EditHeader: FC = () => {
   const nav = useNavigate();
 
@@ -132,7 +172,8 @@ const EditHeader: FC = () => {
           <Space>
             {/* <Button>保存</Button> */}
             <SaveButton />
-            <Button type="primary">发布</Button>
+            {/* <Button type="primary">发布</Button> */}
+            <PublishButton />
           </Space>
         </div>
       </div>
