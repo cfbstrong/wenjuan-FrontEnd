@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 
 import { Button, Typography, Space, Input, message } from "antd";
 import { LeftOutlined, EditOutlined, LoadingOutlined } from "@ant-design/icons";
-import { useRequest } from "ahooks";
+import { useRequest, useKeyPress } from "ahooks";
 
 import { changeTitle } from "../../../store/pageInfoReducer";
 import useGetComponentInfo from "../../../hooks/useGetComponentInfo";
@@ -76,6 +76,15 @@ const SaveButton: FC = () => {
       },
     }
   );
+
+  //保存快捷键
+  useKeyPress(["ctrl.s", "meta.s"], (e: KeyboardEvent) => {
+    // 阻止默认事件，弹出保存窗口 important!
+    e.preventDefault();
+    if (!loading) {
+      save();
+    }
+  });
 
   return (
     <Button
