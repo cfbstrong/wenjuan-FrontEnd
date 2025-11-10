@@ -3,6 +3,7 @@ import { ComponentPropsType } from "../../components/QuestionComponents";
 import { produce } from "immer";
 import cloneDeep from "lodash.clonedeep";
 import { nanoid } from "nanoid";
+import { arrayMove } from "@dnd-kit/sortable";
 
 import { getNextSelectedId } from "./utils";
 
@@ -225,6 +226,21 @@ const componentsSlice = createSlice({
         }
       }
     ),
+
+    //拖拽后还是需要修改数据才能实现拖拽排序，用dispatch才能实现数据联动
+    moveComponent: produce(
+      (
+        draft: ComponentsStateType,
+        action: PayloadAction<{ oldIndex: number; newIndex: number }>
+      ) => {
+        //记得要重新赋值给draft.componentList，不然不会生效
+        draft.componentList = arrayMove(
+          draft.componentList,
+          action.payload.oldIndex,
+          action.payload.newIndex
+        );
+      }
+    ),
   },
 });
 
@@ -242,4 +258,5 @@ export const {
   selectPrevComponent,
   selectNextComponent,
   changeComponentTitle,
+  moveComponent,
 } = componentsSlice.actions;

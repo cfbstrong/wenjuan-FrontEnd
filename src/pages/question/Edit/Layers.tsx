@@ -3,11 +3,14 @@ import { useDispatch } from "react-redux";
 import styles from "./Layers.module.scss";
 import classNames from "classnames";
 import useGetComponentInfo from "../../../hooks/useGetComponentInfo";
+import SortableContainer from "../../../components/DragSortable/SortableContainer";
+import SortableItem from "../../../components/DragSortable/SortableItem";
 import {
   changeSelectedId,
   changeComponentTitle,
   toogleComponentLocked,
   changeComponentHiddden,
+  moveComponent,
 } from "../../../store/componentsReducer";
 import { message, Input, Button, Space } from "antd";
 import { EyeInvisibleOutlined, LockOutlined } from "@ant-design/icons";
@@ -18,6 +21,17 @@ const Layers: FC = () => {
 
   const dispatch = useDispatch();
   const { componentList, selectedId } = useGetComponentInfo();
+
+  const componentListWithId = componentList.map((component) => {
+    return {
+      ...component,
+      id: component.fe_id,
+    };
+  });
+
+  function handleOnDragEnd(oldIndex: number, newIndex: number) {
+    dispatch(moveComponent({ oldIndex, newIndex })); //important 拖拽只是实现了一个动画效果，最后还是需要依赖修改数据，来驱动视图出现渲染，才能实现拖拽排序
+  }
 
   function handleClick(fe_id: string) {
     const curComponent = componentList.find((item) => item.fe_id === fe_id);
@@ -55,7 +69,7 @@ const Layers: FC = () => {
   }
 
   return (
-    <div>
+    <SortableContainer items={componentListWithId} onDragEnd={handleOnDragEnd}>
       {componentList.map((component, index) => {
         const { title, fe_id, isHidden, isLocked } = component;
 
@@ -68,44 +82,46 @@ const Layers: FC = () => {
         });
 
         return (
-          <div className={styles.wrapper} key={index}>
-            <div onClick={() => handleClick(fe_id)} className={finalStyle}>
-              {/* 切换标题和输入框 */}
-              {changeTitleId === fe_id ? (
-                <Input
-                  value={title}
-                  onPressEnter={() => setChangeTitleId("")}
-                  onBlur={() => setChangeTitleId("")}
-                  onChange={handleChange}
-                />
-              ) : (
-                title
-              )}
+          <SortableItem id={fe_id} key={fe_id}>
+            <div className={styles.wrapper}>
+              <div onClick={() => handleClick(fe_id)} className={finalStyle}>
+                {/* 切换标题和输入框 */}
+                {changeTitleId === fe_id ? (
+                  <Input
+                    value={title}
+                    onPressEnter={() => setChangeTitleId("")}
+                    onBlur={() => setChangeTitleId("")}
+                    onChange={handleChange}
+                  />
+                ) : (
+                  title
+                )}
+              </div>
+              <div className={styles.handler}>
+                <Space>
+                  <Button
+                    size="small"
+                    shape="circle"
+                    className={!isHidden ? styles.btn : ""}
+                    icon={<EyeInvisibleOutlined />}
+                    type={isHidden ? "primary" : "text"}
+                    onClick={() => changeHidden(fe_id, !isHidden)}
+                  ></Button>
+                  <Button
+                    size="small"
+                    shape="circle"
+                    className={!isLocked ? styles.btn : ""}
+                    icon={<LockOutlined />}
+                    type={isLocked ? "primary" : "text"}
+                    onClick={() => changeLocked(fe_id)}
+                  ></Button>
+                </Space>
+              </div>
             </div>
-            <div className={styles.handler}>
-              <Space>
-                <Button
-                  size="small"
-                  shape="circle"
-                  className={!isHidden ? styles.btn : ""}
-                  icon={<EyeInvisibleOutlined />}
-                  type={isHidden ? "primary" : "text"}
-                  onClick={() => changeHidden(fe_id, !isHidden)}
-                ></Button>
-                <Button
-                  size="small"
-                  shape="circle"
-                  className={!isLocked ? styles.btn : ""}
-                  icon={<LockOutlined />}
-                  type={isLocked ? "primary" : "text"}
-                  onClick={() => changeLocked(fe_id)}
-                ></Button>
-              </Space>
-            </div>
-          </div>
+          </SortableItem>
         );
       })}
-    </div>
+    </SortableContainer>
   );
 };
 
