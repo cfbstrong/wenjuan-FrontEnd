@@ -2,6 +2,7 @@ import React from "react";
 import "./App.css";
 import { RouterProvider } from "react-router-dom";
 import router from "./router";
+import "./App.css";
 import "@ant-design/v5-patch-for-react-19"; // 解决antd5与react18的兼容性问题
 
 function App() {

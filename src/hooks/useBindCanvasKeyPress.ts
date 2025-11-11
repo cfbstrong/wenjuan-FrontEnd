@@ -12,7 +12,10 @@ import {
 function isActiveElementValid() {
   const activeElem = document.activeElement;
   if (activeElem === document.body) {
-    return true; //光标没有focus在input上
+    return true; //光标没有focus在input上  删输入框的字和删画布中的组件需要区分开
+  }
+  if (activeElem?.matches('div[role="button"]')) {
+    return true;
   }
   return false;
 }
