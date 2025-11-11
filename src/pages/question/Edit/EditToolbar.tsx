@@ -8,6 +8,8 @@ import {
   BlockOutlined,
   UpOutlined,
   DownOutlined,
+  UndoOutlined,
+  RedoOutlined,
 } from "@ant-design/icons";
 
 import { useDispatch } from "react-redux";
@@ -22,6 +24,8 @@ import {
 import useGetComponentInfo from "../../../hooks/useGetComponentInfo";
 import useBindCanvasKeyPress from "../../../hooks/useBindCanvasKeyPress";
 
+import { ActionCreators as UndoActionCreators } from "redux-undo";
+
 const EditToolbar: FC = () => {
   const dispatch = useDispatch();
   const { selectedId, selectedComponent, copiedComponent, componentList } =
@@ -32,6 +36,10 @@ const EditToolbar: FC = () => {
   );
   const isFirst = selectedComponentIndex <= 0;
   const isLast = selectedComponentIndex >= componentList.length - 1;
+
+  //撤销重做按钮禁用与否判断
+  //  canUndo: state.todos.past.length > 0,
+  //   canRedo: state.todos.future.length > 0
 
   //绑定快捷键
   useBindCanvasKeyPress();
@@ -81,6 +89,16 @@ const EditToolbar: FC = () => {
         newIndex: selectedComponentIndex + 1,
       })
     );
+  }
+
+  //撤销
+  function handleUndo() {
+    dispatch(UndoActionCreators.undo());
+  }
+
+  //重做
+  function handleRedo() {
+    dispatch(UndoActionCreators.redo());
   }
 
   return (
@@ -136,6 +154,20 @@ const EditToolbar: FC = () => {
           disabled={isLast}
           icon={<DownOutlined />}
           onClick={() => moveDown()}
+        ></Button>
+      </Tooltip>
+      <Tooltip title="撤销">
+        <Button
+          shape="circle"
+          icon={<UndoOutlined />}
+          onClick={() => handleUndo()}
+        ></Button>
+      </Tooltip>
+      <Tooltip title="重做">
+        <Button
+          shape="circle"
+          icon={<RedoOutlined />}
+          onClick={() => handleRedo()}
         ></Button>
       </Tooltip>
     </Space>
