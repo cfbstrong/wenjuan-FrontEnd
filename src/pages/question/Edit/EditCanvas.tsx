@@ -6,12 +6,15 @@ import { MouseEvent } from "react";
 
 // import QuestionInput from "../../../components/QuestionComponents/QuestionInput/Component";
 // import QuestionTitle from "../../../components/QuestionComponents/QuestionTitle/Component";
+import SortableContainer from "../../../components/DragSortable/SortableContainer";
+import SortableItem from "../../../components/DragSortable/SortableItem";
 
 import useGetComponentInfo from "../../../hooks/useGetComponentInfo";
 import { getComponentConfByType } from "../../../components/QuestionComponents";
 import {
   ComponentInfoType,
   changeSelectedId,
+  moveComponent,
 } from "../../../store/componentsReducer";
 import { useDispatch } from "react-redux";
 
@@ -46,36 +49,51 @@ const EditCanvas: FC<PropsType> = (props) => {
     dispatch(changeSelectedId(id));
   }
 
+  const componentListWithId = componentList.map((c) => {
+    return {
+      ...c,
+      id: c.fe_id,
+    };
+  });
+
+  function handleOnDragEnd(oldIndex: number, newIndex: number) {
+    dispatch(moveComponent({ oldIndex, newIndex }));
+  }
+
   return (
-    <div className={styles.canvas}>
-      {componentList
-        .filter((c) => !c.isHidden)
-        .map((component) => {
-          const { fe_id } = component;
+    <SortableContainer items={componentListWithId} onDragEnd={handleOnDragEnd}>
+      <div className={styles.canvas}>
+        {componentList
+          .filter((c) => !c.isHidden)
+          .map((component) => {
+            const { fe_id } = component;
 
-          //根据selectedId来设置被选中样式 important
-          const wapperDefaultStyle = styles["component-wapper"];
-          const seletedStyle = styles.selected;
-          const lockedStyle = styles.locked;
-          const wapperStyle = classNames({
-            [wapperDefaultStyle]: true, //默认样式
-            [seletedStyle]: selectedId === fe_id, //被选中样式
-            [lockedStyle]: component.isLocked, //被锁定样式
-          });
+            //根据selectedId来设置被选中样式 important
+            const wapperDefaultStyle = styles["component-wapper"];
+            const seletedStyle = styles.selected;
+            const lockedStyle = styles.locked;
+            const wapperStyle = classNames({
+              [wapperDefaultStyle]: true, //默认样式
+              [seletedStyle]: selectedId === fe_id, //被选中样式
+              [lockedStyle]: component.isLocked, //被锁定样式
+            });
 
-          return (
-            <div
-              key={fe_id}
-              className={wapperStyle}
-              onClick={(e) => {
-                handleClick(e, fe_id);
-              }}
-            >
-              <div className={styles.component}>{getComponent(component)}</div>
-            </div>
-          );
-        })}
-      {/* <div className={styles["component-wapper"]}>
+            return (
+              <SortableItem id={fe_id} key={fe_id}>
+                <div
+                  className={wapperStyle}
+                  onClick={(e) => {
+                    handleClick(e, fe_id);
+                  }}
+                >
+                  <div className={styles.component}>
+                    {getComponent(component)}
+                  </div>
+                </div>
+              </SortableItem>
+            );
+          })}
+        {/* <div className={styles["component-wapper"]}>
         <div className={styles.component}>
           <QuestionInput />
         </div>
@@ -85,7 +103,8 @@ const EditCanvas: FC<PropsType> = (props) => {
           <QuestionTitle />
         </div>
       </div> */}
-    </div>
+      </div>
+    </SortableContainer>
   );
 };
 
