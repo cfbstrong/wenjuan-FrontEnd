@@ -6,6 +6,7 @@ export type PageInfoStateType = {
   description: string;
   js?: string;
   css?: string;
+  isPublished: boolean;
 };
 
 const INIT_STATE: PageInfoStateType = {
@@ -13,6 +14,7 @@ const INIT_STATE: PageInfoStateType = {
   description: "",
   js: "",
   css: "",
+  isPublished: false,
 };
 
 export const pageInfoSlice = createSlice({

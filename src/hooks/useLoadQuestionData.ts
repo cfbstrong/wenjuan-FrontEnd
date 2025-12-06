@@ -52,7 +52,14 @@ export const useLoadQuestionData = () => {
   useEffect(() => {
     //important : 异步网络请求适合用useEffect，同时设置依赖项[data]
     //一开始由于网络请求需要时间所以没有数据，后面拿到数据之后，需要再次设置redux中的数据
-    const { componentList = [], title, js, css, description } = data || {};
+    const {
+      componentList = [],
+      title,
+      js,
+      css,
+      description,
+      isPublished,
+    } = data || {};
 
     let selectedId = "";
 
@@ -64,7 +71,7 @@ export const useLoadQuestionData = () => {
       resetComponents({ componentList, selectedId, copiedComponent: null })
     );
 
-    dispatch(resetPageInfo({ title, description, js, css }));
+    dispatch(resetPageInfo({ title, description, js, css, isPublished }));
   }, [data]);
 
   return { loading, error };

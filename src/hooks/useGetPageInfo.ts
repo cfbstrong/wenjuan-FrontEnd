@@ -5,8 +5,9 @@ import { PageInfoStateType } from "../store/pageInfoReducer";
 const useGetPageInfo = () => {
   const pageInfo = useSelector<StateType>((state) => state.pageInfo);
 
-  const { title, description, js, css } = pageInfo as PageInfoStateType;
-  return { title, description, js, css };
+  const { title, description, js, css, isPublished } =
+    pageInfo as PageInfoStateType;
+  return { title, description, js, css, isPublished };
 };
 
 export default useGetPageInfo;
