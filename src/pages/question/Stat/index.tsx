@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useTitle } from "ahooks";
 import { Spin, Result, Button } from "antd";
 import { useLoadQuestionData } from "../../../hooks/useLoadQuestionData";
+import ComponentList from "./ComponentList";
 import StatHeader from "./StatHeader";
 import styles from "./index.module.scss";
 import useGetPageInfo from "../../../hooks/useGetPageInfo";
@@ -48,8 +49,9 @@ const Stat: FC = () => {
       <StatHeader />
       <div className={styles["content-wrapper"]}>
         <div className={styles.content}>
-          content
-          <div className={styles.left}>left</div>
+          <div className={styles.left}>
+            <ComponentList />
+          </div>
           <div className={styles.center}>main</div>
           <div className={styles.right}>right</div>
         </div>
