@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTitle } from "ahooks";
 import { Spin, Result, Button } from "antd";
@@ -14,6 +14,11 @@ const Stat: FC = () => {
   useTitle(`问卷统计 - ${title}`);
 
   const nav = useNavigate();
+
+  //状态提升
+  const [selectedComponentId, setSelectedComponentId] = useState<string>(""); //当前选中组件
+  const [selectedComponentType, setSelectedComponentType] =
+    useState<string>(""); //当前选中组件类型
 
   if (loading) {
     return (
@@ -50,7 +55,11 @@ const Stat: FC = () => {
       <div className={styles["content-wrapper"]}>
         <div className={styles.content}>
           <div className={styles.left}>
-            <ComponentList />
+            <ComponentList
+              selectedComponentId={selectedComponentId}
+              setSelectedComponentId={setSelectedComponentId}
+              setSelectedComponentType={setSelectedComponentType}
+            />
           </div>
           <div className={styles.center}>main</div>
           <div className={styles.right}>right</div>
