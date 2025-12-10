@@ -18,13 +18,19 @@ import QuestionTextareaConf, {
 import QuestionRadioConf from "../QuestionComponents/QuestionRadio";
 import QuestionCheckboxConf from "../QuestionComponents/QuestionCheckbox";
 
-//统一管理QuestionComponents中各个组件的props type
-export type ComponentPropsType =
-  | QuestionInputPropsType
-  | QuestionTitlePropsType
-  | QuestionPragraphPropsType
-  | QuestionInfoPropsType
-  | QuestionTextareaPropsType;
+// 统一管理QuestionComponents中各个组件的props type
+export type ComponentPropsType = QuestionInputPropsType &
+  QuestionTitlePropsType &
+  QuestionPragraphPropsType &
+  QuestionInfoPropsType &
+  QuestionTextareaPropsType;
+
+// export type ComponentPropsType =
+//   | QuestionInputPropsType
+//   | QuestionTitlePropsType
+//   | QuestionPragraphPropsType
+//   | QuestionInfoPropsType
+//   | QuestionTextareaPropsType;
 
 export type ComponentConfType = {
   type: string;
