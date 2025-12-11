@@ -17,3 +17,12 @@ export async function getQuestionStatListService(
   //   params: opt,
   // })) as ResDataType;
 }
+
+export async function getComponentStatService(
+  questionId: string,
+  componentId: string
+): Promise<ResDataType> {
+  const url = `/api/stat/${questionId}/${componentId}`;
+  const data = (await instance.get(url)) as ResDataType;
+  return data;
+}
