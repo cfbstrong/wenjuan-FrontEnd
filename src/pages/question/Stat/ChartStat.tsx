@@ -1,6 +1,7 @@
 import React, { FC, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { getComponentStatService } from "../../../services/stat";
+import StatComponent from "../../../components/QuestionComponents/QuestionRadio/StatComponent";
 import { useRequest } from "ahooks";
 import { Typography } from "antd";
 
@@ -34,7 +35,8 @@ const ChartStat: FC<PropsType> = (props) => {
     if (!selectedComponentId) {
       return <div>未选中组件</div>;
     }
-    return <div>{JSON.stringify(data && data.stat)}</div>;
+    // return <div>{JSON.stringify(data && data.stat)}</div>;
+    return <StatComponent stat={data && data.stat} />;
   }
 
   return (

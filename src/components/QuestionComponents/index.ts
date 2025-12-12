@@ -15,7 +15,9 @@ import QuestionInfoConf, {
 import QuestionTextareaConf, {
   QuestionTextareaPropsType,
 } from "../QuestionComponents/QuestionTextarea";
-import QuestionRadioConf from "../QuestionComponents/QuestionRadio";
+import QuestionRadioConf, {
+  QuestionRadioStatPropsType,
+} from "../QuestionComponents/QuestionRadio";
 import QuestionCheckboxConf from "../QuestionComponents/QuestionCheckbox";
 
 // 统一管理QuestionComponents中各个组件的props type
@@ -24,6 +26,9 @@ export type ComponentPropsType = QuestionInputPropsType &
   QuestionPragraphPropsType &
   QuestionInfoPropsType &
   QuestionTextareaPropsType;
+
+// 统一各个组件的统计属性类型
+type ComponentStatPropsType = QuestionRadioStatPropsType;
 
 // export type ComponentPropsType =
 //   | QuestionInputPropsType
@@ -38,6 +43,7 @@ export type ComponentConfType = {
   props: ComponentPropsType;
   Component: FC<ComponentPropsType>;
   PropComponent: FC<ComponentPropsType>;
+  StatComponent?: FC<ComponentStatPropsType>;
 };
 
 //统一管理QuestionComponents中各个组件的所有信息 显示在canvas 中间画布中

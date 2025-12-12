@@ -97,7 +97,9 @@ const PageStat: FC<PropTypes> = (props) => {
 
   return (
     <div>
-      <Title level={3}>答卷数量：{data && data.total}</Title>
+      <Title level={3} style={{ marginBottom: "30px" }}>
+        答卷数量：{data && data.total}
+      </Title>
       <Table
         dataSource={dataSource}
         columns={columns}
