@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from "react";
+import React, { FC, useEffect, useMemo } from "react";
 import { useParams } from "react-router-dom";
 import { getComponentStatService } from "../../../services/stat";
 import StatComponent from "../../../components/QuestionComponents/QuestionRadio/StatComponent";
