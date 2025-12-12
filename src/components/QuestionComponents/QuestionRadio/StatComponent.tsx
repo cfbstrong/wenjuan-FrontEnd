@@ -1,5 +1,5 @@
 import React, { FC, useMemo } from "react";
-import { Pie, PieChart, Cell } from "recharts";
+import { Pie, PieChart, Cell, Tooltip } from "recharts";
 import { QuestionRadioStatPropsType } from "../QuestionRadio";
 
 // const data01 = [
@@ -55,6 +55,7 @@ const StatComponent: FC<QuestionRadioStatPropsType> = (props) => {
           return <Cell key={name} fill={COLORS[index]} />;
         })}
       </Pie>
+      <Tooltip />
     </PieChart>
   );
 };

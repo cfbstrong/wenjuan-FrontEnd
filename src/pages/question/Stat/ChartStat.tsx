@@ -1,7 +1,8 @@
-import React, { FC, useEffect, useMemo } from "react";
+import React, { FC, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { getComponentStatService } from "../../../services/stat";
-import StatComponent from "../../../components/QuestionComponents/QuestionRadio/StatComponent";
+import StatComponent from "../../../components/QuestionComponents/QuestionCheckbox/StatComponent";
+// import StatComponent from "../../../components/QuestionComponents/QuestionRadio/StatComponent";
 import { useRequest } from "ahooks";
 import { Typography } from "antd";
 

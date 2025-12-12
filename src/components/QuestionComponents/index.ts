@@ -18,7 +18,9 @@ import QuestionTextareaConf, {
 import QuestionRadioConf, {
   QuestionRadioStatPropsType,
 } from "../QuestionComponents/QuestionRadio";
-import QuestionCheckboxConf from "../QuestionComponents/QuestionCheckbox";
+import QuestionCheckboxConf, {
+  QuestionCheckboxStatPropsType,
+} from "../QuestionComponents/QuestionCheckbox";
 
 // 统一管理QuestionComponents中各个组件的props type
 export type ComponentPropsType = QuestionInputPropsType &
@@ -28,7 +30,8 @@ export type ComponentPropsType = QuestionInputPropsType &
   QuestionTextareaPropsType;
 
 // 统一各个组件的统计属性类型
-type ComponentStatPropsType = QuestionRadioStatPropsType;
+type ComponentStatPropsType = QuestionRadioStatPropsType &
+  QuestionCheckboxStatPropsType;
 
 // export type ComponentPropsType =
 //   | QuestionInputPropsType
