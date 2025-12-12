@@ -50,7 +50,7 @@ export type ComponentConfType = {
 };
 
 //统一管理QuestionComponents中各个组件的所有信息 显示在canvas 中间画布中
-const ComponetConfList = [
+const ComponetConfList: Array<ComponentConfType> = [
   QuesionInputConf,
   QuesionTitleConf,
   QuestionParagraphConf,

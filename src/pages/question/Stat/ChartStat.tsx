@@ -1,8 +1,9 @@
 import React, { FC, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { getComponentStatService } from "../../../services/stat";
-import StatComponent from "../../../components/QuestionComponents/QuestionCheckbox/StatComponent";
+// import StatComponent from "../../../components/QuestionComponents/QuestionCheckbox/StatComponent";
 // import StatComponent from "../../../components/QuestionComponents/QuestionRadio/StatComponent";
+import { getComponentConfByType } from "../../../components/QuestionComponents";
 import { useRequest } from "ahooks";
 import { Typography } from "antd";
 
@@ -36,8 +37,19 @@ const ChartStat: FC<PropsType> = (props) => {
     if (!selectedComponentId) {
       return <div>未选中组件</div>;
     }
+
+    const { StatComponent } =
+      getComponentConfByType(selectedComponentType) || {};
+
+    if (!StatComponent) {
+      return <div>该组件无统计数据</div>;
+    } else {
+      return <StatComponent stat={data && data.stat} />;
+    }
+
     // return <div>{JSON.stringify(data && data.stat)}</div>;
-    return <StatComponent stat={data && data.stat} />;
+    // return <StatComponent stat={data && data.stat} />;
+    //根据组件的type渲染对应的统计组件
   }
 
   return (
