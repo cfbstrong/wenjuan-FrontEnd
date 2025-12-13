@@ -1,7 +1,7 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useRequest } from "ahooks";
-import { Spin, Typography, Table } from "antd";
+import { Spin, Typography, Table, Pagination } from "antd";
 import { getQuestionStatListService } from "../../../services/stat";
 import useGetComponentInfo from "../../../hooks/useGetComponentInfo";
 
@@ -23,15 +23,19 @@ const PageStat: FC<PropTypes> = (props) => {
   const { id = "" } = useParams();
   const { componentList } = useGetComponentInfo();
 
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+
   const { data, loading } = useRequest(
     async () => {
       const data = await getQuestionStatListService(id, {
-        page: 1,
-        pageSize: 10,
+        page,
+        pageSize,
       });
       return data;
     },
     {
+      refreshDeps: [page, pageSize, id], //!!!important
       onSuccess: (data) => {
         console.log(data);
       },
@@ -105,6 +109,15 @@ const PageStat: FC<PropTypes> = (props) => {
         columns={columns}
         pagination={false}
       ></Table>
+      <Pagination
+        align="end"
+        style={{ marginTop: "20px" }}
+        pageSize={pageSize}
+        current={page}
+        total={data && data.total}
+        onChange={(page) => setPage(page)}
+        onShowSizeChange={(page, pageSize) => setPageSize(pageSize)}
+      />
     </div>
   );
 };
