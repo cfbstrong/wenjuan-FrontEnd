@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useCallback } from "react";
 import {
   ComponentGroupList,
   ComponentConfType,
@@ -17,7 +17,8 @@ const { Title } = Typography;
 function getComponent(c: ComponentConfType, dispatch: AppDispatch) {
   const { type, Component, props, title } = c;
 
-  function handleClick() {
+  //使用useCallback包裹，避免每次渲染都创建新的函数
+  const handleClick = useCallback(() => {
     dispatch(
       addComponent({
         fe_id: nanoid(), //前端自定义的fe_id，因为无法生成满足mongodb的_id
@@ -26,7 +27,18 @@ function getComponent(c: ComponentConfType, dispatch: AppDispatch) {
         props,
       })
     );
-  }
+  }, []);
+
+  // function handleClick() {
+  //   dispatch(
+  //     addComponent({
+  //       fe_id: nanoid(), //前端自定义的fe_id，因为无法生成满足mongodb的_id
+  //       title,
+  //       type,
+  //       props,
+  //     })
+  //   );
+  // }
 
   return (
     <div
