@@ -14,7 +14,7 @@ import { Typography } from "antd";
 
 const { Title } = Typography;
 
-function getComponent(c: ComponentConfType, dispatch: AppDispatch) {
+function GetComponent(c: ComponentConfType, dispatch: AppDispatch) {
   const { type, Component, props, title } = c;
 
   //使用useCallback包裹，避免每次渲染都创建新的函数
@@ -71,7 +71,7 @@ const ComponentLib: FC = () => {
               {group.groupName}
             </Title>
             {group.componentList.map((componentConf) => {
-              return getComponent(componentConf, dispatch);
+              return GetComponent(componentConf, dispatch);
             })}
           </div>
         );
