@@ -11,8 +11,6 @@
     "@dnd-kit/utilities": "^3.2.2",
     "@reduxjs/toolkit": "^2.8.2",
     "@testing-library/dom": "^10.4.0",
-    "@testing-library/jest-dom": "^6.6.3",
-    "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^13.5.0",
     "@types/jest": "^27.5.2",
     "@types/node": "^16.18.126",
@@ -40,10 +38,10 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+    "test": "react-scripts test",
     "analyze": "source-map-explorer 'build/static/js/*.js'",
     "start": "craco start",
     "build": "craco build",
-    "test": "craco test",
     "eject": "react-scripts eject",
     "lint": " eslint \"src/**/*.+(js|ts|jsx|tsx)\" ",
     "format": "prettier --write \"src/**/*.+(js|ts|jsx|tsx)\" "
@@ -67,13 +65,17 @@
     ]
   },
   "devDependencies": {
+    "@babel/preset-react": "^7.28.5",
     "@eslint/js": "^9.31.0",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.1",
     "@types/lodash.clonedeep": "^4.5.9",
     "eslint": "^8.57.1",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.3",
     "eslint-plugin-react": "^7.37.5",
     "globals": "^16.3.0",
+    "jest": "^27.5.1",
     "prettier": "^3.6.2",
     "typescript-eslint": "^8.37.0"
   }
