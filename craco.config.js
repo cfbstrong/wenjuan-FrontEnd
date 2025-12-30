@@ -26,8 +26,8 @@ module.exports = {
             },
           },
         };
-        return webpackConfig;
       }
+      return webpackConfig;
     },
   },
 
