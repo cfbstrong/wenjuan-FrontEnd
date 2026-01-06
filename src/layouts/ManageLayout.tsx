@@ -36,7 +36,7 @@ const ManageLayout: FC = () => {
   } = useRequest(createQuestionService, {
     manual: true,
     onSuccess: (data) => {
-      navigate(`/question/edit/${data.id}`);
+      navigate(`/question/edit/${data.id || data._id}`);
       message.success("创建成功");
     },
   });

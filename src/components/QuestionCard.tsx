@@ -82,7 +82,7 @@ const QuestionCard: FC<PropsType> = (props) => {
       manual: true,
       onSuccess: (data) => {
         message.success("复制成功");
-        navigate(`/question/edit/${data.id}`);
+        navigate(`/question/edit/${data.id || data._id}`);
       },
     }
   );
